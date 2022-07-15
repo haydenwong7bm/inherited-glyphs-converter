@@ -7,7 +7,7 @@
  ### Command line
  
 	python . <file name>
- `-j` flag for Japanese unifiable variants and `-k` flag for Korean unifiable variants.
+ `-j` flag for using Japanese unifiable variants and `-k` flag for using Korean unifiable variants.
  
  ### Import module
     >>> from __main__ import *
