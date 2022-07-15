@@ -1,12 +1,6 @@
 import argparse
 import os
 
-parser = argparse.ArgumentParser()
-parser.add_argument('file', default=None)
-parser.add_argument('-j', '--use_j', action='store_true')
-parser.add_argument('-k', '--use_k', action='store_true')
-args = parser.parse_args()
-
 __all__ = ['convert']
 
 def _file_to_dict(file):
@@ -40,6 +34,13 @@ def convert(string: str, use_j=False, use_k=False) -> str:
     return string
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('file', type=str)
+    parser.add_argument('-j', '--use_j', action='store_true')
+    parser.add_argument('-k', '--use_k', action='store_true')
+    
+    args = parser.parse_args()
+    
     filename, file_ext = os.path.splitext(args.file)
     with open(args.file, 'rt') as file_read, open(f'{filename}-converted{file_ext}', 'wt') as file_write:
         file_write.write(convert(file_read.read(), args.use_j, args.use_k))
