@@ -9,9 +9,9 @@
  `-j` flag for Japanese unifiable variants and `-k` flag for Korean unifiable variants.
  
  Import module:
-	>>> from \_\_main\_\_ import \*
-	>>> print(convert('奥林匹克精神'))
-	奧林匹克精神
-	>>> print(convert('奥林匹克精神', use_j=True)) # use Japanese unifiable variants, for Korean unifiable variants use use_k=True.
-	奧林匹克精神
+    >>> from \_\_main\_\_ import \*
+    >>> print(convert('奥林匹克精神'))
+    奧林匹克精神
+    >>> print(convert('奥林匹克精神', use_j=True)) # use Japanese unifiable variants, for Korean unifiable variants use use_k=True.
+    奧林匹克精神
 	
