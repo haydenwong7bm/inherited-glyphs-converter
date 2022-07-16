@@ -1,6 +1,3 @@
-import argparse
-import os
-
 __all__ = ['convert']
 
 def _file_to_dict(file):
@@ -20,7 +17,7 @@ CONVERSION_DICT_J = _file_to_dict(open('conversion-tables/j-compatibility_varian
 CONVERSION_DICT_K = _file_to_dict(open('conversion-tables/k-compatibility_variants.txt', 'rt', encoding='utf-8'))
 CONVERSION_DICT_INHERITED = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
 
-def convert(string: str, use_j=False, use_k=False) -> str:
+def convert(string: str, use_j=False, use_k=False, use_inherited=False) -> str:
     for key, value in CONVERSION_DICT_UNIFIABLE.items():
         string = string.replace(key, value)
         
@@ -37,16 +34,3 @@ def convert(string: str, use_j=False, use_k=False) -> str:
             string = string.replace(key, value)
     
     return string
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('file', type=str)
-    parser.add_argument('-j', '--use_j', action='store_true')
-    parser.add_argument('-k', '--use_k', action='store_true')
-    parser.add_argument('-r', '--use_inherited', action='store_false')
-    
-    args = parser.parse_args()
-    
-    filename, file_ext = os.path.splitext(args.file)
-    with open(args.file, 'rt') as file_read, open(f'{filename}-converted{file_ext}', 'wt') as file_write:
-        file_write.write(convert(file_read.read(), args.use_j, args.use_k))
