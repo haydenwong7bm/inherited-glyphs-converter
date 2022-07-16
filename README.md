@@ -7,10 +7,10 @@
  ### Command line
  
 	python . <file name>
- `-j` flag for using Japanese unifiable variants and `-k` flag for using Korean unifiable variants.
+ `-j` flag for using Japanese unifiable variants and `-k` flag for using Korean unifiable variants. `-r` for _not_ converting other inherited variants (e.g. 舉 → 擧)
  
  ### Import module
- To use Japanese compatibility variants, specify `use_j=True`; for Korean compatibility variants, specify `use_k=True`, for not converting other inherited variants (e.g. 舉 → 擧), specify `use_inherited=False`.
+ To use Japanese compatibility variants, specify `use_j=True`. For Korean compatibility variants, specify `use_k=True`. For _not_ converting other inherited variants, specify `use_inherited=False`.
     >>> from inheritedglyphs import *
     >>> print(convert('奥林匹克精神'))
     奧林匹克精神
