@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from convert import *
+from inheritedglyphs import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('file', type=str)
