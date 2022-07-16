@@ -11,6 +11,7 @@
  
  ### Import module
  To use Japanese compatibility variants, specify `use_j=True`. For Korean compatibility variants, specify `use_k=True`. For _not_ converting other inherited variants, specify `use_inherited=False`.
+ 
     >>> from inheritedglyphs import *
     >>> print(convert('奥林匹克精神'))
     奧林匹克精神
