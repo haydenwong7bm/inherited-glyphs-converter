@@ -15,12 +15,13 @@ def _file_to_dict(file):
         
     return conversion_dict
 
-CONVERSION_DICT_SCS = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
+CONVERSION_DICT_UNIFIABLE = _file_to_dict(open('conversion-tables/unifiable_variants.txt', 'rt', encoding='utf-8'))
 CONVERSION_DICT_J = _file_to_dict(open('conversion-tables/j-compatibility_variants.txt', 'rt', encoding='utf-8'))
 CONVERSION_DICT_K = _file_to_dict(open('conversion-tables/k-compatibility_variants.txt', 'rt', encoding='utf-8'))
+CONVERSION_DICT_INHERITED = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
 
 def convert(string: str, use_j=False, use_k=False) -> str:
-    for key, value in CONVERSION_DICT_SCS.items():
+    for key, value in CONVERSION_DICT_UNIFIABLE.items():
         string = string.replace(key, value)
         
     if use_j:
@@ -30,7 +31,11 @@ def convert(string: str, use_j=False, use_k=False) -> str:
     if use_k:
         for key, value in CONVERSION_DICT_K.items():
             string = string.replace(key, value)
-            
+        
+    if use_inherited:
+        for key, value in CONVERSION_DICT_INHERITED.items():
+            string = string.replace(key, value)
+    
     return string
 
 if __name__ == '__main__':
@@ -38,6 +43,7 @@ if __name__ == '__main__':
     parser.add_argument('file', type=str)
     parser.add_argument('-j', '--use_j', action='store_true')
     parser.add_argument('-k', '--use_k', action='store_true')
+    parser.add_argument('-r', '--use_inherited', action='store_false')
     
     args = parser.parse_args()
     
