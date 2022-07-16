@@ -10,9 +10,10 @@
  `-j` flag for using Japanese unifiable variants and `-k` flag for using Korean unifiable variants.
  
  ### Import module
+ To use Japanese compatibility variants, specify `use_j=True`; for Korean compatibility variants, specify `use_k=True`, for not converting other inherited variants (e.g. 舉 → 擧), specify `use_inherited=False`.
     >>> from inheritedglyphs import *
     >>> print(convert('奥林匹克精神'))
     奧林匹克精神
-    >>> print(convert('奥林匹克精神', use_j=True)) # use Japanese unifiable variants, for Korean unifiable variants use use_k=True.
+    >>> print(convert('奥林匹克精神', use_j=True))
     奧林匹克精神
 	
