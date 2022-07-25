@@ -11,6 +11,8 @@
  `-j` flag for using Japanese unifiable variants and `-k` flag for using Korean unifiable variants. `-r` for _not_ converting other inherited variants (e.g. 舉 → 擧)
  
  ### Import module
+ The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
+ 
  To use Japanese compatibility variants, specify `use_j=True`. For Korean compatibility variants, specify `use_k=True`. For _not_ converting other inherited variants, specify `use_inherited=False`.
  
     >>> from inheritedglyphs import *
