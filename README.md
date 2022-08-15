@@ -21,5 +21,5 @@
     >>> print(convert('逹至奥林匹克精神的秘訣', use_j=True))
     達至奧林匹克精神的祕訣
 	>>> print(convert('逹至奥林匹克精神的秘訣', use_inherited=False))
-    達至奧林匹克精神的秘訣
+    達至奧林匹克精神的秘訣
 	
