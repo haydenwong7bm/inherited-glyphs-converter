@@ -16,8 +16,10 @@
  To use Japanese compatibility variants, specify `use_j=True`. For Korean compatibility variants, specify `use_k=True`. For _not_ converting other inherited variants, specify `use_inherited=False`.
  
     >>> from inheritedglyphs import *
-    >>> print(convert('奥林匹克精神'))
-    奧林匹克精神
-    >>> print(convert('奥林匹克精神', use_j=True))
-    奧林匹克精神
+    >>> print(convert('逹至奥林匹克精神的秘訣'))
+    達至奧林匹克精神的祕訣
+    >>> print(convert('逹至奥林匹克精神的秘訣', use_j=True))
+    達至奧林匹克精神的祕訣
+	>>> print(convert('逹至奥林匹克精神的秘訣', use_inherited=False))
+    達至奧林匹克精神的秘訣
 	
