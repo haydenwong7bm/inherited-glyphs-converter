@@ -18,7 +18,7 @@ CONVERSION_DICT_J = _file_to_dict(open('conversion-tables/j-compatibility_varian
 CONVERSION_DICT_K = _file_to_dict(open('conversion-tables/k-compatibility_variants.txt', 'rt', encoding='utf-8'))
 CONVERSION_DICT_INHERITED = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
 
-def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, use_inherited=True) -> str:
+def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, convert_variant=True) -> str:
     for key, value in CONVERSION_DICT_UNIFIABLE.items():
         string = string.replace(key, value)
     
@@ -34,7 +34,7 @@ def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, use_
         for key, value in CONVERSION_DICT_K.items():
             string = string.replace(key, value)
         
-    if use_inherited:
+    if convert_variant:
         for key, value in CONVERSION_DICT_INHERITED.items():
             string = string.replace(key, value)
     

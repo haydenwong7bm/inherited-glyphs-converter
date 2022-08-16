@@ -14,14 +14,14 @@
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
  
- To use Japanese compatibility ideographs, set `use_j=True`. To use Korean compatibility ideographs, set `use_k=True`. For _not_ converting other inherited variants, set `use_inherited=False`.
+ To use Japanese compatibility ideographs, set `use_j=True`. To use Korean compatibility ideographs, set `use_k=True`. For _not_ converting other inherited variants, set `convert_variant=False`.
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
 	達至奧林匹克精神的祕訣
 	>>> print(convert('逹至奥林匹克精神的秘訣', use_j=True))
 	達至奧林匹克精神的祕訣
-	>>> print(convert('逹至奥林匹克精神的秘訣', use_inherited=False))
+	>>> print(convert('逹至奥林匹克精神的秘訣', convert_variant=False))
 	達至奧林匹克精神的秘訣
 	
 # 傳承字形轉換器
@@ -41,12 +41,12 @@
  
  `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
  
- 要使用日本相容表意文字，設定`use_j=True`。要使用韓國相容表意文字，設定`use_k=True`。要不轉換其他異體字，設定`use_inherited=False`。
+ 要使用日本相容表意文字，設定`use_j=True`。要使用韓國相容表意文字，設定`use_k=True`。要不轉換其他異體字，設定`convert_variant=False`。
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
 	達至奧林匹克精神的祕訣
 	>>> print(convert('逹至奥林匹克精神的秘訣', use_j=True))
 	達至奧林匹克精神的祕訣
-	>>> print(convert('逹至奥林匹克精神的秘訣', use_inherited=False))
+	>>> print(convert('逹至奥林匹克精神的秘訣', convert_variant=False))
 	達至奧林匹克精神的秘訣
