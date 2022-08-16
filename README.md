@@ -1,19 +1,20 @@
 # inherited-glyphs-converter
  Convert CJK text to their [inherited glyphs](https://en.wikipedia.org/wiki/Jiu_zixing) form, eliminating the [xin zixing](https://en.wikipedia.org/wiki/Xin_zixing), [Hong Kong](https://en.wikipedia.org/wiki/List_of_Graphemes_of_Commonly-Used_Chinese_Characters) and [Taiwan](https://en.wikipedia.org/wiki/Standard_Form_of_National_Characters) standard variant if that character variant is [encoded seperately](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs#CJK_Unified_Ideographs) on Unicode.
  
- Note that the converter will keep [Shinjitai](https://en.wikipedia.org/wiki/Shinjitai) and [simplified Chinese characters](https://en.wikipedia.org/wiki/Simplified_Chinese_characters) as much as possible.
+ The converter will keep [Shinjitai](https://en.wikipedia.org/wiki/Shinjitai) and [simplified Chinese characters](https://en.wikipedia.org/wiki/Simplified_Chinese_characters) as much as possible.
  
  ## Usage
  
  ### Command line
  
 	python . <file name>
- `-j` flag for using Japanese compatibility variants and `-k` flag for using Korean compatibility variants. `-r` for _not_ converting other inherited variants (e.g. 舉 → 擧)
+	
+ To use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs), use the `-j` option. To use Korean compatibility ideographs, use the `-k` option. To _not_ convert other inherited variants (e.g. 舉 → 擧), use the `-r` option.
  
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
  
- To use Japanese compatibility variants, set `use_j=True`. For Korean compatibility variants, set `use_k=True`. For _not_ converting other inherited variants, set `use_inherited=False`.
+ To use Japanese compatibility ideographs, set `use_j=True`. To use Korean compatibility ideographs, set `use_k=True`. For _not_ converting other inherited variants, set `use_inherited=False`.
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
@@ -33,11 +34,14 @@
  ### 命令列
  
 	python . <檔案名稱>
- `-j`選項會使用日本相容異體字、`-k`選項會使用韓國相容異體字、`-r`選項不會轉換其他異體字（例如：舉 → 擧）
+	
+ 要使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)，請設定`-j`選項。要使用韓國相容表意文字，請設`-k`選項。要_不_轉換其他異體字（例如：舉 → 擧），請設定`-r`選項。
  
- `inheritedglyphs`模組提供一個函數`convert()`，會轉換字串至傳承字形.
+ ## 導入模組
  
- 要使用日本相容異體字，設定`use_j=True`。要使用韓國相容異體字，設定`use_k=True`。要不轉換其他異體字，設定`use_inherited=False`。
+ `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
+ 
+ 要使用日本相容表意文字，設定`use_j=True`。要使用韓國相容表意文字，設定`use_k=True`。要不轉換其他異體字，設定`use_inherited=False`。
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
