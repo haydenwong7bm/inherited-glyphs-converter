@@ -31,10 +31,6 @@ def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, conv
         for key, value in CONVERSION_DICT_J.items():
             string = string.replace(key, value)
         
-    if use_k:
-        for key, value in CONVERSION_DICT_K.items():
-            string = string.replace(key, value)
-        
     if convert_variant:
         for key, value in CONVERSION_DICT_INHERITED.items():
             string = string.replace(key, value)
@@ -42,5 +38,9 @@ def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, conv
         if use_supp_planes:
             for key, value in CONVERSION_DICT_INHERITED_SUPP.items():
                 string = string.replace(key, value)
+        
+    if use_k:
+        for key, value in CONVERSION_DICT_K.items():
+            string = string.replace(key, value)
     
     return string
