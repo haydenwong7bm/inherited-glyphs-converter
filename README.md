@@ -9,12 +9,26 @@
  
 	python . <file name>
 	
- To use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs), use the `-j` option. To use Korean compatibility ideographs, use the `-k` option. To _not_ convert other inherited variants (e.g. 舉 → 擧), use the `-r` option.
+ Command line arguments:
+ 
+ | **Options** | **Usage** |
+ |---|---|
+ | `-j` | Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
+ | `-k` | Use Korean compatibility ideographs. |
+ | `-r` | _Not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
+ | `-sc` | _Not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
+ | `-s` | Use characters on supplementary planes, this also disables the `-sc` option. |                                           |
  
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
  
- To use Japanese compatibility ideographs, set `use_j=True`. To use Korean compatibility ideographs, set `use_k=True`. For _not_ converting other inherited variants, set `convert_variant=False`.
+ | **Options** | **Usage** |
+ |---|---|
+ | `-j` | If `True`, it will use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
+ | `-k` | If `True`, it will use Korean compatibility ideographs. |
+ | `-r` | If `True`, it will _not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
+ | `-sc` | If `True`, it will _not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
+ | `-s` | If `True`, it will use characters on supplementary planes, this also disables the `-sc` option. |
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
@@ -35,13 +49,25 @@
  
 	python . <檔案名稱>
 	
- 要使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)，請設定`-j`選項。要使用韓國相容表意文字，請設定`-k`選項。要不轉換其他異體字（例如：舉 → 擧），請設定`-r`選項。
+ | **選項** | **功能** |
+ |---|---|
+ | `-j` | 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
+ | `-k` | 使用韓國相容表意文字。 |
+ | `-r` | 不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
+ | `-sc` | 不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
+ | `-s` | 使用於輔助平面中的字符，此選項亦會禁用`-sc`選項。 |
  
  ### 導入模組
  
  `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
  
- 要使用日本相容表意文字，設定`use_j=True`。要使用韓國相容表意文字，設定`use_k=True`。要不轉換其他異體字，設定`convert_variant=False`。
+ | **選項** | **功能** |
+ |---|---|
+ | `use_j` | 如設爲`True`，將使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
+ | `use_k` | 如設爲`True`，將使用韓國相容表意文字。 |
+ | `convert_variants` | 如設爲`True`，將不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
+ | `use_supp_core` | 如設爲`True`，將不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
+ | `use_supp_planes` | 如設爲`True`，將使用於輔助平面中的字符，此選項亦會禁用`-sc`選項。 |
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
