@@ -22,13 +22,16 @@ INHERITED_VARIANTS_SUPP = _file_to_dict(open('conversion-tables/inherited_varian
 RADICALS_VARIANTS = _file_to_dict(open('conversion-tables/radicals.txt', 'rt', encoding='utf-8'))
 
 def convert(string: str, *, use_supp_core=True, use_supp_planes=False, use_j=False, use_k=False, convert_variants=True) -> str:
+    if use_supp_planes:
+        use_supp_core = True
+    
     for key, value in UNIFIABLE_VARIANTS.items():
         string = string.replace(key, value)
     
     for key, value in RADICALS_VARIANTS.items():
         string = string.replace(key, value)
     
-    if use_supp_planes or use_supp_core:
+    if use_supp_core:
         for key, value in UNIFIABLE_VARIANTS_SUPP_CORE.items():
             string = string.replace(key, value)
     
