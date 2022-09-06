@@ -11,10 +11,10 @@ parser.add_argument('-r', action='store_false')
 parser.add_argument('-s', action='store_true')
 parser.add_argument('-sc', action='store_false')
 
+args = parser.parse_args()
+
 if args.s:
     args.sc = False
-
-args = parser.parse_args()
 
 filename, file_ext = path.splitext(path.basename(args.file))
 with open(args.file, 'rt') as file_read, open(f'{filename}-converted{file_ext}', 'wt') as file_write:
