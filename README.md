@@ -22,7 +22,9 @@
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
  
- | **Options** | **Usage** |
+ Function arguments:
+ 
+ | **Arguments** | **Usage** |
  |---|---|
  | `-j` | If `True`, it will use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
  | `-k` | If `True`, it will use Korean compatibility ideographs. |
@@ -48,7 +50,9 @@
  ### 命令列
  
 	python . <檔案名稱>
-	
+ 
+ 命令列選項：
+ 
  | **選項** | **功能** |
  |---|---|
  | `-j` | 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
@@ -60,6 +64,8 @@
  ### 導入模組
  
  `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
+ 
+ 函數選項：
  
  | **選項** | **功能** |
  |---|---|
