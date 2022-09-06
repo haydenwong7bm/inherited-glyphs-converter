@@ -12,39 +12,44 @@ def _file_to_dict(file):
         
     return conversion_dict
 
-CONVERSION_DICT_UNIFIABLE = _file_to_dict(open('conversion-tables/unifiable_variants.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_UNIFIABLE_SUPP = _file_to_dict(open('conversion-tables/unifiable_variants_supp_planes.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_J = _file_to_dict(open('conversion-tables/j-compatibility_variants.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_K = _file_to_dict(open('conversion-tables/k-compatibility_variants.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_INHERITED = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_INHERITED_SUPP = _file_to_dict(open('conversion-tables/inherited_variants_supp.txt', 'rt', encoding='utf-8'))
-CONVERSION_DICT_RADICALS = _file_to_dict(open('conversion-tables/radicals.txt', 'rt', encoding='utf-8'))
+UNIFIABLE_VARIANTS = _file_to_dict(open('conversion-tables/unifiable_variants.txt', 'rt', encoding='utf-8'))
+UNIFIABLE_VARIANTS_SUPP_CORE = _file_to_dict(open('conversion-tables/unifiable_variants_supp_core.txt', 'rt', encoding='utf-8'))
+UNIFIABLE_VARIANTS_SUPP = _file_to_dict(open('conversion-tables/unifiable_variants_supp_planes.txt', 'rt', encoding='utf-8'))
+J_COMPATIBILITY_VARIANTS = _file_to_dict(open('conversion-tables/j-compatibility_variants.txt', 'rt', encoding='utf-8'))
+K_COMPATIBILITY_VARIANTS = _file_to_dict(open('conversion-tables/k-compatibility_variants.txt', 'rt', encoding='utf-8'))
+INHERITED_VARIANTS = _file_to_dict(open('conversion-tables/inherited_variants.txt', 'rt', encoding='utf-8'))
+INHERITED_VARIANTS_SUPP = _file_to_dict(open('conversion-tables/inherited_variants_supp_planes.txt', 'rt', encoding='utf-8'))
+RADICALS_VARIANTS = _file_to_dict(open('conversion-tables/radicals.txt', 'rt', encoding='utf-8'))
 
-def convert(string: str, *, use_supp_planes=True, use_j=False, use_k=False, convert_variant=True) -> str:
-    for key, value in CONVERSION_DICT_UNIFIABLE.items():
-        string = string.replace(key, value)
-        
-    for key, value in CONVERSION_DICT_RADICALS.items():
+def convert(string: str, *, use_supp_core=True, use_supp_planes=False, use_j=False, use_k=False, convert_variants=True) -> str:
+    for key, value in UNIFIABLE_VARIANTS.items():
         string = string.replace(key, value)
     
+    for key, value in RADICALS_VARIANTS.items():
+        string = string.replace(key, value)
+    
+    if use_supp_planes or use_supp_core:
+        for key, value in UNIFIABLE_VARIANTS_SUPP_CORE.items():
+            string = string.replace(key, value)
+    
     if use_supp_planes:
-        for key, value in CONVERSION_DICT_UNIFIABLE_SUPP.items():
+        for key, value in UNIFIABLE_VARIANTS_SUPP.items():
             string = string.replace(key, value)
     
     if use_j:
-        for key, value in CONVERSION_DICT_J.items():
+        for key, value in J_COMPATIBILITY_VARIANTS.items():
             string = string.replace(key, value)
-        
-    if convert_variant:
-        for key, value in CONVERSION_DICT_INHERITED.items():
+    
+    if convert_variants:
+        for key, value in INHERITED_VARIANTS.items():
             string = string.replace(key, value)
-            
+    
         if use_supp_planes:
-            for key, value in CONVERSION_DICT_INHERITED_SUPP.items():
+            for key, value in INHERITED_VARIANTS_SUPP.items():
                 string = string.replace(key, value)
-        
+    
     if use_k:
-        for key, value in CONVERSION_DICT_K.items():
+        for key, value in K_COMPATIBILITY_VARIANTS.items():
             string = string.replace(key, value)
     
     return string
