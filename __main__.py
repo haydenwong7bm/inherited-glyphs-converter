@@ -10,7 +10,7 @@ parser.add_argument('-k', action='store_true')
 parser.add_argument('-r', action='store_false')
 parser.add_argument('-s', action='store_true')
 parser.add_argument('-sc', action='store_false')
-parser.add_argument('-t', action='store_false')
+parser.add_argument('-t', action='store_true')
 
 args = parser.parse_args()
 
