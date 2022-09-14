@@ -52,13 +52,13 @@ def convert(string: str, *, use_supp_core=True, use_supp_planes=False, use_j=Fal
     
     if use_t and use_supp_core:
         string = _map(string, T_COMPATIBILITY_VARIANTS_CORE)
-        
-        '''
-        if use_supp_planes:
-            string = _map(string, T_COMPATIBILITY_VARIANTS)
-        '''
     
     if use_k:
         string = _map(string, K_COMPATIBILITY_VARIANTS)
+    
+    '''
+    if use_t and use_supp_planes:
+        string = _map(string, T_COMPATIBILITY_VARIANTS)
+    '''
     
     return string
