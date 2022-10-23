@@ -15,6 +15,7 @@
  |---|---|
  | `-j` | Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
  | `-k` | Use Korean compatibility ideographs. |
+ | `-t` | Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). |
  | `-r` | _Not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
  | `-sc` | _Not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
  | `-s` | Use characters on supplementary planes. |
