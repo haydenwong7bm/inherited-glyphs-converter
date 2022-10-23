@@ -17,7 +17,7 @@
  | `-k` | Use Korean compatibility ideographs. |
  | `-r` | _Not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
  | `-sc` | _Not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
- | `-s` | Use characters on supplementary planes, this also disables the `-sc` option. |                                           |
+ | `-s` | Use characters on supplementary planes. |
  
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
@@ -26,11 +26,12 @@
  
  | **Arguments** | **Usage** |
  |---|---|
- | `-j` | If `True`, it will use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
- | `-k` | If `True`, it will use Korean compatibility ideographs. |
- | `-r` | If `True`, it will _not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
- | `-sc` | If `True`, it will _not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
- | `-s` | If `True`, it will use characters on supplementary planes, this also disables the `-sc` option. |
+ | `use_j` | If `True`, it will use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). |
+ | `use_k` | If `True`, it will use Korean compatibility ideographs. |
+ | `use_t` | If `True`, it will use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). |
+ | `use_r` | If `True`, it will _not_ to convert other inherited variants (e.g. 舉 → 擧, 裡 → 裏). |
+ | `use_supp_core` | If `True`, it will _not_ to use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. |
+ | `use_supp_planes` | If `True`, it will use characters on supplementary planes. |
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
@@ -57,6 +58,7 @@
  |---|---|
  | `-j` | 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
  | `-k` | 使用韓國相容表意文字。 |
+ | `-t` | 使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 |
  | `-r` | 不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
  | `-sc` | 不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
  | `-s` | 使用於輔助平面中的字符，此選項亦會禁用`-sc`選項。 |
@@ -71,9 +73,10 @@
  |---|---|
  | `use_j` | 如設爲`True`，將使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
  | `use_k` | 如設爲`True`，將使用韓國相容表意文字。 |
+ | `use_t` | 如設爲`True`，將使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 |
  | `convert_variants` | 如設爲`True`，將不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
  | `use_supp_core` | 如設爲`True`，將不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
- | `use_supp_planes` | 如設爲`True`，將使用於輔助平面中的字符，此選項亦會禁用`-sc`選項。 |
+ | `use_supp_planes` | 如設爲`True`，將使用於輔助平面中的字符。 |
  
 	>>> from inheritedglyphs import *
 	>>> print(convert('逹至奥林匹克精神的秘訣'))
