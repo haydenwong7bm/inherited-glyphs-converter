@@ -10,8 +10,8 @@ def _map(string: str, map_dict: dict={}) -> str:
 
 CORE = 'c'
 SUPP = '*'
-J = 'J'
-K = 'K'
+J = 'j'
+K = 'k'
 T = 't'
 INHERITED = 'i'
 NON_COGNATE = 'n'
