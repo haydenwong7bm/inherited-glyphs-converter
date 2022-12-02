@@ -14,7 +14,6 @@ J = 'j'
 K = 'k'
 T = 't'
 INHERITED = 'i'
-NON_COGNATE = 'n'
 
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_LIST = defaultdict(dict)
@@ -56,15 +55,12 @@ def convert(string: str, *, use_supp_core=True, use_supp_planes=False, use_j=Fal
     
     if convert_variants:
         string = _map(string, VARIANTS_LIST[INHERITED])
-        string = _map(string, VARIANTS_LIST[NON_COGNATE])
         
         if use_supp_core:
             string = _map(string, VARIANTS_LIST[INHERITED + CORE])
-            string = _map(string, VARIANTS_LIST[NON_COGNATE + CORE])
             
         if use_supp_planes:
             string = _map(string, VARIANTS_LIST[INHERITED + SUPP])
-            string = _map(string, VARIANTS_LIST[NON_COGNATE + SUPP])
     
     if use_j:
         string = _map(string, VARIANTS_LIST[J])
