@@ -11,7 +11,7 @@
 	
  Command line arguments:
  
- | **Options** | **Usage** | **Default value if `-o` not provided |
+ | **Options** | **Usage** | **Default value if `-o` not provided** |
  |---|---|---|
  | `-o` | Set options below if this argument is provided. | |
  | `-j` | Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). | `True` |
