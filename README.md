@@ -17,8 +17,7 @@
  | `-j` | Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs). | `True` |
  | `-k` | Use Korean compatibility ideographs. | `True` |
  | `-t` | Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `True` |
- | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes.
- if `value` is `*`: Use all characters on supplementary planes. | `c` |
+ | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes. | `c` |
  | `-i` | Convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
  
  ### Import module
@@ -28,10 +27,7 @@
  
  | **Arguments** | **Usage** | **Default value** |
  |---|---|
- | `use_compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.
- `'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).
- `'k'`: Use Korean compatibility ideographs.
- `'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
+ | `use_compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
  | `convert_inherited` | If `True`, it will convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
  | `use_supp` | Either be `False`, `'c'`, `'*'`. If `c`, it can use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. If `'*'`, it can use all characters on supplementary planes. | `'c'` |
  
