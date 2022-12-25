@@ -26,7 +26,7 @@
  Function arguments:
  
  | **Arguments** | **Usage** | **Default value** |
- |---|---|
+ |---|---|---|
  | `use_compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
  | `convert_inherited` | If `True`, it will convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
  | `use_supp` | Either be `False`, `'c'`, `'*'`. If `c`, it can use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. If `'*'`, it can use all characters on supplementary planes. | `'c'` |
