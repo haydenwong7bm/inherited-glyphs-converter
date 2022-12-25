@@ -1,22 +1,31 @@
 import argparse
 import os.path as path
+import sys
 
 from inheritedglyphs import *
 
 parser = argparse.ArgumentParser()
-parser.add_argument('file', type=str)
+parser.add_argument('file')
+parser.add_argument('-o', '--options', action='store_true')
 parser.add_argument('-j', action='store_true')
 parser.add_argument('-k', action='store_true')
-parser.add_argument('-r', action='store_false')
-parser.add_argument('-s', action='store_true')
-parser.add_argument('-sc', action='store_false')
 parser.add_argument('-t', action='store_true')
+parser.add_argument('-s', '--supp', default=False)
+parser.add_argument('-i', '--inherited', action='store_true')
 
 args = parser.parse_args()
 
-if args.s:
-    args.sc = False
+if not args.options: # default options
+    args.j = True
+    args.k = True
+    args.t = True
+    args.supp = 'c'
+    args.inherited = True
+
+compatibility_args = 'j' * args.j + 'k' * args.k + 't' * args.t
 
 filename, file_ext = path.splitext(path.basename(args.file))
-with open(args.file, 'rt') as file_read, open(f'{filename}-converted{file_ext}', 'wt') as file_write:
-    file_write.write(convert(file_read.read(), use_supp_core=args.sc, use_supp_planes=args.s, use_j=args.j, use_k=args.k, use_t=args.t, convert_variants=args.r))
+with open(args.file, 'rt') as input_file, open(f'{filename}-converted{file_ext}', 'wt') as output_file:
+    contents = input_file.read()
+    converted = convert(contents, use_supp_planes=args.supp, use_compatibility=compatibility_args, convert_inherited=args.inherited)
+    output_file.write(converted)

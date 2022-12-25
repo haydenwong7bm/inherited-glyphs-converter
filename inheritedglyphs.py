@@ -1,6 +1,7 @@
 from collections import defaultdict
+import re
 
-__all__ = ['convert']
+__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T']
 
 def _map(string: str, map_dict: dict={}) -> str:
     for key, value in map_dict.items():
@@ -9,69 +10,57 @@ def _map(string: str, map_dict: dict={}) -> str:
     return string
 
 CORE = 'c'
-SUPP = '*'
+ALL = '*'
 J = 'j'
 K = 'k'
 T = 't'
 INHERITED = 'i'
 
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
-    VARIANTS_LIST = defaultdict(dict)
+    VARIANTS_TABLE = dict()
     
     for line in file:
         key_value = line.rstrip('\n').split('\t')
         key = key_value[0]
         value = key_value[1]
         
-        if len(key_value) == 3:
-            target = key_value[2]
+        if len(key_value) >= 3:
+            attr = key_value[2]
         else:
-            target = ''
+            attr = ''
         
-        VARIANTS_LIST[target][key] = value
+        VARIANTS_TABLE[key] = (value, attr)
 
 with open('conversion-tables/radicals.txt', 'rt', encoding='utf-8') as file:
-    RADICALS_VARIANTS = {}
+    RADICALS_VARIANTS_TABLE = {}
     
     for line in file:
         key_value = line.rstrip('\n').split('\t')
         key = key_value[0]
         value = key_value[1]
         
-        RADICALS_VARIANTS[key] = value
+        RADICALS_VARIANTS_TABLE[key] = value
 
-def convert(string: str, *, use_supp_core=True, use_supp_planes=False, use_j=False, use_k=False, use_t=False, convert_variants=True) -> str:
-    if use_supp_planes:
-        use_supp_core = True
+def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True) -> str:
+    if use_supp_planes not in {False, 'c', '*'}:
+        raise TypeError(f"must be either False, 'c' or '*', not {type(use_supp_planes)}")
     
-    string = _map(string, VARIANTS_LIST[''])
-    string = _map(string, RADICALS_VARIANTS)
+    use_compatibility = ''.join(use_compatibility)
+    regex = f'[{use_compatibility}{"i" * convert_inherited}]'
     
-    if use_supp_core:
-        string = _map(string, VARIANTS_LIST[CORE])
-    
-    if use_supp_planes:
-        string = _map(string, VARIANTS_LIST[SUPP])
-    
-    if convert_variants:
-        string = _map(string, VARIANTS_LIST[INHERITED])
+    for key, value in VARIANTS_TABLE.items():
+        value, attr = value
         
-        if use_supp_core:
-            string = _map(string, VARIANTS_LIST[INHERITED + CORE])
-            
-        if use_supp_planes:
-            string = _map(string, VARIANTS_LIST[INHERITED + SUPP])
+        if not attr:
+            string = string.replace(key, value)
+        elif re.search(regex, attr):
+            if re.search('[c*]', attr):
+                if use_supp_planes in attr:
+                    string = string.replace(key, value)
+            else:
+                string = string.replace(key, value)
     
-    if use_j:
-        string = _map(string, VARIANTS_LIST[J])
+    for key, value in RADICALS_VARIANTS_TABLE.items():
+        string = string.replace(key, value)
     
-    if use_t and use_supp_core:
-        string = _map(string, VARIANTS_LIST[T + CORE])
-    
-    if use_k:
-        string = _map(string, VARIANTS_LIST[K])
-    
-    if use_t and use_supp_planes:
-        string = _map(string, VARIANTS_LIST[T])
-        
     return string
