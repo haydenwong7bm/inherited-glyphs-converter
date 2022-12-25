@@ -18,7 +18,7 @@
  | `-k` | Use Korean compatibility ideographs. | `True` |
  | `-t` | Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `True` |
  | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes. | `c` |
- | `-i` | Convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
+ | `-i` | Convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
  
  ### Import module
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
@@ -28,11 +28,11 @@
  | **Arguments** | **Usage** | **Default value** |
  |---|---|---|
  | `use_compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
- | `convert_inherited` | If `True`, it will convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
- | `use_supp` | Either be `False`, `'c'`, `'*'`. If `c`, it can use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes. If `'*'`, it can use all characters on supplementary planes. | `'c'` |
+ | `convert_inherited` | If `True`, it will convert other inherited variants (e.g. 祕 → 祕, 裡 → 裏). | `True` |
+ | `use_supp` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters.<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
  
 	>>> from inheritedglyphs import *
-	>>> string = '李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」'
+	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
 	>>> print(convert(string))
 	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
 	>>> print(convert(string, use_compatibility='jt')) # don't use Korean compatibility ideographs
@@ -47,40 +47,38 @@
  
  ## 使用
  
- ### 命令列
+ ### 命令列
  
 	python . <檔案名稱>
  
- 命令列選項：
+ 命令列選項：
  
- | **選項** | **功能** |
- |---|---|
- | `-j` | 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
- | `-k` | 使用韓國相容表意文字。 |
- | `-t` | 使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 |
- | `-r` | 不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
- | `-sc` | 不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
- | `-s` | 使用於輔助平面中的字符，此選項亦會禁用`-sc`選項。 |
+ | **選項** | **功能** | **預設値，如不設定`-o`選項** |
+ |---|---|---|
+ | `-o` | 設定下列選項。 | |
+ | `-j` | 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 | `True` |
+ | `-k` | 使用韓國相容表意文字。 | `True` |
+ | `-t` | 使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 | `True` |
+ | `-s <value>` | 如`value`爲`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>如`value`爲`*`：於輔助平面中，使用所有字符。| `c` |
+ | `-i` | 轉換其他異體字（例如：秘 → 祕、裡 → 裏） | `True` |
  
  ### 導入模組
  
- `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
+ `inheritedglyphs`模組提供了一個函數`convert()`，此函數會轉換字串至傳承字形。
  
- 函數選項：
+ 函數參數：
  
- | **選項** | **功能** |
- |---|---|
- | `use_j` | 如設爲`True`，將使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。 |
- | `use_k` | 如設爲`True`，將使用韓國相容表意文字。 |
- | `use_t` | 如設爲`True`，將使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 |
- | `convert_variants` | 如設爲`True`，將不轉換其他異體字（例如：舉 → 擧、裡 → 裏） |
- | `use_supp_core` | 如設爲`True`，將不使用於輔助平面中的[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。 |
- | `use_supp_planes` | 如設爲`True`，將使用於輔助平面中的字符。 |
+ | **參數** | **功能** | **預設値** |`
+ |---|---|---|
+ | `use_compatibility` | 一個含有`'j'`、`'k'`、及／或`'t'`的可疊代者物件。<br>`'j'`: 使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`'k'`: 使用韓國相容表意文字。<br>`'t'`: 使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 | `'jkt'` |
+ | `convert_inherited` | 如設爲`True`，將轉換其他異體字（例如：祕 → 祕、裡 → 裏） | `True` |
+ | `use_supp` | 參數値可爲`False`、`'c'`、或`'*'`。`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>`*`：於輔助平面中，使用所有字符。 | `'c'` |
  
 	>>> from inheritedglyphs import *
-	>>> print(convert('逹至奥林匹克精神的秘訣'))
-	達至奧林匹克精神的祕訣
-	>>> print(convert('逹至奥林匹克精神的秘訣', use_j=True))
-	達至奧林匹克精神的祕訣
-	>>> print(convert('逹至奥林匹克精神的秘訣', convert_variant=False))
-	達至奧林匹克精神的秘訣
+	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
+	>>> print(convert(string))
+	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	>>> print(convert(string, use_compatibility='jt')) # don't use Korean compatibility ideographs
+	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	>>> print(convert(string, convert_inherited=False))
+	李白（唐‧五言絕句）《靜夜思》：「床前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
