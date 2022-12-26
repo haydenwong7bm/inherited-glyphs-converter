@@ -59,6 +59,9 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
                     string = string.replace(key, value)
             else:
                 string = string.replace(key, value)
+        elif re.search('[c*]', attr):
+            if use_supp_planes in attr:
+                string = string.replace(key, value)
     
     for key, value in RADICALS_VARIANTS_TABLE.items():
         string = string.replace(key, value)
