@@ -41,7 +41,17 @@ with open('conversion-tables/radicals.txt', 'rt', encoding='utf-8') as file:
         
         RADICALS_VARIANTS_TABLE[key] = value
 
-def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True) -> str:
+with open('conversion-tables/ivd-adobe-japan1.txt', 'rt', encoding='utf-8') as file:
+    IVS_TABLE = {}
+    
+    for line in file:
+        key_value = line.rstrip('\n').split('\t')
+        key = key_value[0]
+        value = key_value[1]
+        
+        IVS_TABLE[key] = value
+
+def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True, use_ivs=False) -> str:
     if use_supp_planes not in {False, 'c', '*'}:
         raise TypeError(f"must be either False, 'c' or '*', not {type(use_supp_planes)}")
     
@@ -65,5 +75,9 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     
     for key, value in RADICALS_VARIANTS_TABLE.items():
         string = string.replace(key, value)
+    
+    if use_ivs:
+        for key, value in IVS_TABLE.items():
+            string = string.replace(key, value)
     
     return string
