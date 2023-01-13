@@ -10,7 +10,7 @@ parser.add_argument('-o', '--options', action='store_true')
 parser.add_argument('-j', action='store_true')
 parser.add_argument('-k', action='store_true')
 parser.add_argument('-t', action='store_true')
-parser.add_argument('-s', '--supp', default=False)
+parser.add_argument('-s', '--supp', default='')
 parser.add_argument('-i', '--inherited', action='store_true')
 parser.add_argument('-I', '--ivs', action='store_true')
 

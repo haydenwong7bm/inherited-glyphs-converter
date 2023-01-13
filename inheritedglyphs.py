@@ -3,12 +3,6 @@ import re
 
 __all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T']
 
-def _map(string: str, map_dict: dict={}) -> str:
-    for key, value in map_dict.items():
-        string = string.replace(key, value)
-        
-    return string
-
 CORE = 'c'
 ALL = '*'
 J = 'j'
@@ -52,32 +46,59 @@ with open('conversion-tables/ivd-adobe-japan1.txt', 'rt', encoding='utf-8') as f
         IVS_TABLE[key] = value
 
 def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True, use_ivs=False) -> str:
-    if use_supp_planes not in {False, 'c', '*'}:
-        raise TypeError(f"must be either False, 'c' or '*', not {type(use_supp_planes)}")
+    if use_supp_planes not in {False, '', 'c', '*'}:
+        raise TypeError
     
-    use_compatibility = ''.join(use_compatibility)
-    regex = f'[{use_compatibility}{"i" * convert_inherited}]'
+    if not use_supp_planes:
+        use_supp_planes = ''
     
-    for key, value in VARIANTS_TABLE.items():
-        value, attr = value
-        
-        if not attr:
-            string = string.replace(key, value)
-        elif re.search(regex, attr):
-            if re.search('[c*]', attr):
-                if use_supp_planes in attr:
-                    string = string.replace(key, value)
+    def sort_order(x):
+        if x == '' or 'i' in x:
+            order = 0
+        else:
+            order = 2
+            for option in use_compatibility:
+                if option in x:
+                    break
+                else:
+                    order += 2
             else:
-                string = string.replace(key, value)
-        elif re.search('[c*]', attr):
-            if use_supp_planes in attr:
-                string = string.replace(key, value)
+                order = 0
+        
+        order += bool(re.search('[c*]', x))
+        
+        return order
     
-    for key, value in RADICALS_VARIANTS_TABLE.items():
-        string = string.replace(key, value)
+    sorted_table = list(VARIANTS_TABLE.items())
+    sorted_table.sort(key=lambda x: sort_order(x[1][1]))
+    sorted_table = dict(sorted_table)
     
-    if use_ivs:
-        for key, value in IVS_TABLE.items():
-            string = string.replace(key, value)
+    use_compatibility = f'[{"".join(use_compatibility)}]'
     
-    return string
+    returned = string
+    
+    for char in string:
+        if char in sorted_table:
+            value, attr = sorted_table[char]
+            
+            replace = not ('*' in attr and use_supp_planes not in attr)
+            
+            if re.search('[jkt]', attr):
+                replace = replace and re.search(use_compatibility, attr)
+                
+            else:
+                replace = not ('*' in attr and use_supp_planes not in attr)
+                
+                if replace and ('i' in attr):
+                    replace = convert_inherited
+            
+            if replace:
+                returned = returned.replace(char, value)
+        
+        elif char in RADICALS_VARIANTS_TABLE:
+            returned = returned.replace(char, RADICALS_VARIANTS_TABLE[char])
+        
+        if use_ivs and char in IVS_TABLE:
+            returned = returned.replace(char, IVS_TABLE[char])
+    
+    return returned
