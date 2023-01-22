@@ -75,30 +75,42 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     
     use_compatibility = f'[{"".join(use_compatibility)}]'
     
+    basic_table = {}
+    compatibility_table = {}
+    
+    for key, value in sorted_table.items():
+        if re.search(use_compatibility, value[1]):
+            compatibility_table[key] = value
+        else:
+            basic_table[key] = value
+    
     returned = string
     
     for char in string:
-        if char in sorted_table:
+        value = char
+        replace = False
+        if char in basic_table:
             value, attr = sorted_table[char]
             
             replace = not ('*' in attr and use_supp_planes not in attr)
-            
-            if re.search('[jkt]', attr):
-                replace = replace and re.search(use_compatibility, attr)
-                
-            else:
-                replace = not ('*' in attr and use_supp_planes not in attr)
-                
-                if replace and ('i' in attr):
-                    replace = convert_inherited
-            
-            if replace:
-                returned = returned.replace(char, value)
+            if replace and ('i' in attr):
+                replace = convert_inherited
         
+        if value in compatibility_table:
+            value, attr = sorted_table[value]
+            
+            replace = not ('*' in attr and use_supp_planes not in attr)
+            replace = replace and re.search(use_compatibility, attr)
+        
+        elif use_ivs and value in IVS_TABLE:
+            value = IVS_TABLE[value]
+            replace = True
+            
         elif char in RADICALS_VARIANTS_TABLE:
-            returned = returned.replace(char, RADICALS_VARIANTS_TABLE[char])
-        
-        if use_ivs and char in IVS_TABLE:
-            returned = returned.replace(char, IVS_TABLE[char])
+            value = RADICALS_VARIANTS_TABLE[value]
+            replace = True
+            
+        if replace:
+            returned = returned.replace(char, value)
     
     return returned
