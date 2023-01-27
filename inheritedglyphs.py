@@ -89,18 +89,24 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     for char in string:
         value = char
         replace = False
-        if char in basic_table:
-            value, attr = sorted_table[char]
+        if value in basic_table:
+            attr = basic_table[char][1]
             
             replace = not ('*' in attr and use_supp_planes not in attr)
             if replace and ('i' in attr):
                 replace = convert_inherited
+                
+            if replace:
+                value = basic_table[char][0]
         
         if value in compatibility_table:
-            value, attr = sorted_table[value]
+            attr = compatibility_table[value][1]
             
             replace = not ('*' in attr and use_supp_planes not in attr)
             replace = replace and re.search(use_compatibility, attr)
+            
+            if replace:
+                value = compatibility_table[value][0]
         
         elif use_ivs and value in IVS_TABLE:
             value = IVS_TABLE[value]
