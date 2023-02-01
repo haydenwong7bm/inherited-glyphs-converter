@@ -90,8 +90,7 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         value = char
         replace = False
         
-        if char <= 0xffff and value > 0xffff:
-            supp_flag = True
+        supp_flag = ord(char) <= 0xffff and ord(value) > 0xffff
         
         if value in basic_table:
             attr = basic_table[value][1]
@@ -100,6 +99,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
                 replace = bool(use_supp_planes)
                 if use_supp_planes == 'c':
                     replace = use_supp_planes in attr
+            else:
+                replace = True
             
             if replace and ('i' in attr):
                 replace = convert_inherited
@@ -114,6 +115,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
                 replace = bool(use_supp_planes)
                 if use_supp_planes == 'c':
                     replace = use_supp_planes in attr
+            else:
+                replace = True
             
             replace = replace and re.search(use_compatibility, attr)
             
