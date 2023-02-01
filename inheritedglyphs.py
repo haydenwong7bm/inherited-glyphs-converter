@@ -89,20 +89,32 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     for char in string:
         value = char
         replace = False
+        
+        if char <= 0xffff and value > 0xffff:
+            supp_flag = True
+        
         if value in basic_table:
-            attr = basic_table[char][1]
+            attr = basic_table[value][1]
             
-            replace = not ('*' in attr and use_supp_planes not in attr)
+            if supp_flag:
+                replace = bool(use_supp_planes)
+                if use_supp_planes == 'c':
+                    replace = use_supp_planes in attr
+            
             if replace and ('i' in attr):
                 replace = convert_inherited
                 
             if replace:
-                value = basic_table[char][0]
+                value = basic_table[value][0]
         
         if value in compatibility_table:
             attr = compatibility_table[value][1]
             
-            replace = not ('*' in attr and use_supp_planes not in attr)
+            if supp_flag:
+                replace = bool(use_supp_planes)
+                if use_supp_planes == 'c':
+                    replace = use_supp_planes in attr
+            
             replace = replace and re.search(use_compatibility, attr)
             
             if replace:
@@ -115,7 +127,7 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         elif char in RADICALS_VARIANTS_TABLE:
             value = RADICALS_VARIANTS_TABLE[value]
             replace = True
-            
+        
         if replace:
             returned = returned.replace(char, value)
     
