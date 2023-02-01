@@ -73,13 +73,13 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     sorted_table.sort(key=lambda x: sort_order(x[1][1]))
     sorted_table = dict(sorted_table)
     
-    use_compatibility = f'[{"".join(use_compatibility)}]'
+    comp_regex = f'[{"".join(use_compatibility)}]'
     
     basic_table = {}
     compatibility_table = {}
     
     for key, value in sorted_table.items():
-        if re.search(use_compatibility, value[1]):
+        if use_compatibility and re.search(comp_regex, value[1]):
             compatibility_table[key] = value
         else:
             basic_table[key] = value
@@ -90,12 +90,10 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         value = char
         replace = False
         
-        supp_flag = ord(char) <= 0xffff and ord(value) > 0xffff
-        
         if value in basic_table:
             attr = basic_table[value][1]
             
-            if supp_flag:
+            if ord(value) <= 0xffff and ord(basic_table[value][0]) > 0xffff:
                 replace = bool(use_supp_planes)
                 if use_supp_planes == 'c':
                     replace = use_supp_planes in attr
@@ -111,14 +109,14 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         if value in compatibility_table:
             attr = compatibility_table[value][1]
             
-            if supp_flag:
+            if ord(value) <= 0xffff and ord(compatibility_table[value][0]) > 0xffff:
                 replace = bool(use_supp_planes)
                 if use_supp_planes == 'c':
                     replace = use_supp_planes in attr
             else:
                 replace = True
             
-            replace = replace and re.search(use_compatibility, attr)
+            replace = replace and re.search(comp_regex, attr)
             
             if replace:
                 value = compatibility_table[value][0]
