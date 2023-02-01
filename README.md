@@ -32,11 +32,12 @@
  | `use_supp` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters.<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
  
 	>>> from inheritedglyphs import *
-	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
+	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
 	>>> print(convert(string))
-	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
-	>>> print(convert(string, use_compatibility='jt')) # don't use Korean compatibility ideographs
-	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。」
+	>>> print(convert(string, use_compatibility='j')) # don't use Korean and CNS compatibility ideographs
+	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。
+	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
 	>>> print(convert(string, convert_inherited=False))
 	李白（唐‧五言絕句）《靜夜思》：「床前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
 	
@@ -75,10 +76,11 @@
  | `use_supp` | 參數値可爲`False`、`'c'`、或`'*'`。`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>`*`：於輔助平面中，使用所有字符。 | `'c'` |
  
 	>>> from inheritedglyphs import *
-	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
+	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
 	>>> print(convert(string))
-	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
-	>>> print(convert(string, use_compatibility='jt')) # don't use Korean compatibility ideographs
-	李白（唐‧五言絕句）《靜夜思》：「牀前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。」
+	>>> print(convert(string, use_compatibility='j')) # don't use Korean and CNS compatibility ideographs
+	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。
+	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
 	>>> print(convert(string, convert_inherited=False))
 	李白（唐‧五言絕句）《靜夜思》：「床前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
