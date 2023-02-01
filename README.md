@@ -79,7 +79,7 @@
 	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
 	>>> print(convert(string))
 	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。」
-	>>> print(convert(string, use_compatibility='j')) # don't use Korean and CNS compatibility ideographs
+	>>> print(convert(string, use_compatibility='j')) # 不使用韓國及CNS相容表意文字
 	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。
 	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
 	>>> print(convert(string, convert_inherited=False))
