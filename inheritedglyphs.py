@@ -75,8 +75,6 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     
     compatibility_order = [compatibility_map(i) for i in use_compatibility]
     
-    compatibility_regex = f'[{"".join(use_compatibility)}]'
-    
     returned = string
     
     for char in string:
