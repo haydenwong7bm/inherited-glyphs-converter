@@ -10,8 +10,14 @@ K = 'k'
 T = 't'
 INHERITED = 'i'
 
+def _remove_jkt(attr):
+    return re.sub('[jkt]', '', attr)
+
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = dict()
+    J_TABLE = dict()
+    K_TABLE = dict()
+    T_TABLE = dict()
     
     for line in file:
         key_value = line.rstrip('\n').split('\t')
@@ -23,7 +29,20 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
         else:
             attr = ''
         
-        VARIANTS_TABLE[key] = (value, attr)
+        flag = True
+        
+        if J in attr:
+            J_TABLE[key] = value, _remove_jkt(attr)
+            flag = False
+        if K in attr:
+            K_TABLE[key] = value, _remove_jkt(attr)
+            flag = False
+        if T in attr:
+            T_TABLE[key] = value, _remove_jkt(attr)
+            flag = False
+        
+        if flag:
+            VARIANTS_TABLE[key] = value, attr
 
 with open('conversion-tables/radicals.txt', 'rt', encoding='utf-8') as file:
     RADICALS_VARIANTS_TABLE = {}
@@ -52,37 +71,11 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
     if not use_supp_planes:
         use_supp_planes = ''
     
-    def sort_order(x):
-        if x == '' or 'i' in x:
-            order = 0
-        else:
-            order = 2
-            for option in use_compatibility:
-                if option in x:
-                    break
-                else:
-                    order += 2
-            else:
-                order = 0
-        
-        order += bool(re.search('[c*]', x))
-        
-        return order
+    compatibility_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
     
-    sorted_table = list(VARIANTS_TABLE.items())
-    sorted_table.sort(key=lambda x: sort_order(x[1][1]))
-    sorted_table = dict(sorted_table)
+    compatibility_order = [compatibility_map(i) for i in use_compatibility]
     
-    comp_regex = f'[{"".join(use_compatibility)}]'
-    
-    basic_table = {}
-    compatibility_table = {}
-    
-    for key, value in sorted_table.items():
-        if use_compatibility and re.search(comp_regex, value[1]):
-            compatibility_table[key] = value
-        else:
-            basic_table[key] = value
+    compatibility_regex = f'[{"".join(use_compatibility)}]'
     
     returned = string
     
@@ -90,10 +83,10 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         value = char
         replace = False
         
-        if value in basic_table:
-            attr = basic_table[value][1]
+        if value in VARIANTS_TABLE:
+            attr = VARIANTS_TABLE[value][1]
             
-            if ord(value) <= 0xffff and ord(basic_table[value][0]) > 0xffff:
+            if ord(value) <= 0xffff and ord(VARIANTS_TABLE[value][0]) > 0xffff:
                 replace = bool(use_supp_planes)
                 if use_supp_planes == 'c':
                     replace = use_supp_planes in attr
@@ -104,30 +97,29 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
                 replace = convert_inherited
                 
             if replace:
-                value = basic_table[value][0]
-        
-        if value in compatibility_table:
-            attr = compatibility_table[value][1]
-            
-            if ord(value) <= 0xffff and ord(compatibility_table[value][0]) > 0xffff:
-                replace = bool(use_supp_planes)
-                if use_supp_planes == 'c':
-                    replace = use_supp_planes in attr
-            else:
-                replace = True
-            
-            replace = replace and re.search(comp_regex, attr)
-            
-            if replace:
-                value = compatibility_table[value][0]
-        
-        elif use_ivs and value in IVS_TABLE:
-            value = IVS_TABLE[value]
-            replace = True
-            
+                value = VARIANTS_TABLE[value][0]
         elif char in RADICALS_VARIANTS_TABLE:
             value = RADICALS_VARIANTS_TABLE[value]
             replace = True
+        
+        for compatibility_table in compatibility_order:
+            if value in compatibility_table:
+                attr = compatibility_table[value][1]
+                
+                if ord(value) <= 0xffff and ord(compatibility_table[value][0]) > 0xffff:
+                    replace = bool(use_supp_planes)
+                    if use_supp_planes == 'c':
+                        replace = use_supp_planes in attr
+                else:
+                    replace = True
+                
+                if replace:
+                    value = compatibility_table[value][0]
+                    break
+        else:
+            if use_ivs and value in IVS_TABLE:
+                value = IVS_TABLE[value]
+                replace = True
         
         if replace:
             returned = returned.replace(char, value)
