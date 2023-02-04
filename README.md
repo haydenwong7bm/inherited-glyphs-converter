@@ -25,7 +25,9 @@
  | `-s <value>` | 如`value`爲`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。
  如`value`爲`*`：於輔助平面中，使用所有字符。| `c` |
  | `-i` | 轉換其他異體字（例如：秘 → 祕、裡 → 裏） | `True` |
- | `-I`或`--ivs` | 一個含有`'a'`及／或`'m'`的字串。<br>`'a'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'m'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
+ | `-I`或`--ivs` | 一個含有`'a'`及／或`'m'`的字串。
+ `'a'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)
+ `'m'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
  
  ### 導入模組
  
