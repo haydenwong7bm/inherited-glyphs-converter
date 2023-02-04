@@ -5,13 +5,18 @@ __all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T']
 
 CORE = 'c'
 ALL = '*'
+
 J = 'j'
 K = 'k'
 T = 't'
+
 INHERITED = 'i'
 
 def _remove_jkt(attr):
     return re.sub('[jkt]', '', attr)
+
+def _check_supp(a, b):
+    return ord(a) <= 0xffff and ord(b) > 0xffff
 
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = dict()
@@ -65,7 +70,7 @@ with open('conversion-tables/ivd-adobe-japan1.txt', 'rt', encoding='utf-8') as f
         IVS_TABLE[key] = value
 
 def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True, use_ivs=False) -> str:
-    if use_supp_planes not in {False, '', 'c', '*'}:
+    if (not use_supp_planes) or (use_supp_planes not in {CORE, ALL}):
         raise TypeError
     
     if not use_supp_planes:
@@ -84,14 +89,14 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         if value in VARIANTS_TABLE:
             attr = VARIANTS_TABLE[value][1]
             
-            if ord(value) <= 0xffff and ord(VARIANTS_TABLE[value][0]) > 0xffff:
+            if _check_supp(value, VARIANTS_TABLE[value][0]):
                 replace = bool(use_supp_planes)
-                if use_supp_planes == 'c':
+                if use_supp_planes == CORE:
                     replace = use_supp_planes in attr
             else:
                 replace = True
             
-            if replace and ('i' in attr):
+            if replace and (INHERITED in attr):
                 replace = convert_inherited
                 
             if replace:
@@ -99,14 +104,16 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         elif char in RADICALS_VARIANTS_TABLE:
             value = RADICALS_VARIANTS_TABLE[value]
             replace = True
+            returned = returned.replace(char, value)
+            continue
         
         for compatibility_table in compatibility_order:
             if value in compatibility_table:
                 attr = compatibility_table[value][1]
                 
-                if ord(value) <= 0xffff and ord(compatibility_table[value][0]) > 0xffff:
+                if _check_supp(value, compatibility_table[value][0]):
                     replace = bool(use_supp_planes)
-                    if use_supp_planes == 'c':
+                    if use_supp_planes == CORE:
                         replace = use_supp_planes in attr
                 else:
                     replace = True
