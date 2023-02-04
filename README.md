@@ -1,4 +1,4 @@
-* [For English, please click here.](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/master/README_en.md)
+[繁體中文](https://github.com/haydenwong7bm/inherited-glyphs-converter/) [EN](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/master/README_en.md)
 
 * [網上版已推出，請點擊我！](https://haydenwong7bm.github.io/inherited-glyphs-converter/zh-tc/)
 
@@ -32,8 +32,7 @@
  
  | **參數** | **功能** | **預設値** |
  |---|---|---|
- | `use_compatibility` | 一個含有`'j'`、`'k'`、及／或`'t'`的可疊代者物件。
-<br>`'j'`：使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`'k'`：使用韓國相容表意文字。<br> `'t'`：使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 | `['j', 'k', 't']` |
+ | `use_compatibility` | 一個含有`'j'`、`'k'`、及／或`'t'`的可疊代者物件。<br>`'j'`：使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`'k'`：使用韓國相容表意文字。<br> `'t'`：使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 | `['j', 'k', 't']` |
  | `convert_inherited` | 如設爲`True`，將轉換其他異體字（例如：祕 → 祕、裡 → 裏） | `True` |
  | `use_supp` | 參數値可爲`False`、`'c'`、或`'*'`。<br>`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>`*`：於輔助平面中，使用所有字符。 | `'c'` |
  | `use_ivs` | 一個含有`'aj1'`及／或`'mj'`的字串。<br>`'aj1'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'mj'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
