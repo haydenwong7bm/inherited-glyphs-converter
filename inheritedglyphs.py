@@ -59,7 +59,7 @@ with open('conversion-tables/radicals.txt', 'rt', encoding='utf-8') as file:
         
         RADICALS_VARIANTS_TABLE[key] = value
 
-with open('conversion-tables/ivd-adobe-japan1.txt', 'rt', encoding='utf-8') as file:
+with open('conversion-tables/ivs-adobe-japan1.txt', 'rt', encoding='utf-8') as file:
     IVS_TABLE = {}
     
     for line in file:
