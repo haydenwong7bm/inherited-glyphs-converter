@@ -1,4 +1,4 @@
-[繁體中文](https://github.com/haydenwong7bm/inherited-glyphs-converter/) [EN](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/master/README_en.md)
+[繁體中文](https://github.com/haydenwong7bm/inherited-glyphs-converter/) **EN**
 
 * [Online version has been released, click me!](https://haydenwong7bm.github.io/inherited-glyphs-converter/en/)
 
