@@ -1,7 +1,7 @@
 from collections import defaultdict
 import re
 
-__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T']
+__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'INHERITED', 'AJ1', 'MJ']
 
 CORE = 'c'
 ALL = '*'
@@ -12,11 +12,27 @@ T = 't'
 
 INHERITED = 'i'
 
+AJ1 = 'aj1'
+MJ = 'mj'
+
 def _remove_jkt(attr):
     return re.sub('[jkt]', '', attr)
 
 def _check_supp(a, b):
     return ord(a) <= 0xffff and ord(b) > 0xffff
+
+def _read_tsv(path):
+    returned = {}
+    
+    with open(path, 'rt', encoding='utf-8') as file:
+        for line in file:
+            key_value = line.rstrip('\n').split('\t')
+            key = key_value[0]
+            value = key_value[1]
+            
+            returned[key] = value
+    
+    return returned
 
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = dict()
@@ -49,39 +65,30 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
         if flag:
             VARIANTS_TABLE[key] = value, attr
 
-with open('conversion-tables/radicals.txt', 'rt', encoding='utf-8') as file:
-    RADICALS_VARIANTS_TABLE = {}
-    
-    for line in file:
-        key_value = line.rstrip('\n').split('\t')
-        key = key_value[0]
-        value = key_value[1]
-        
-        RADICALS_VARIANTS_TABLE[key] = value
+RADICALS_VARIANTS_TABLE = _read_tsv('conversion-tables/radicals.txt')
+IVS_AJ1_TABLE = _read_tsv('conversion-tables/ivs-adobe-japan1.txt')
+IVS_MJ_TABLE = _read_tsv('conversion-tables/ivs-moji-joho.txt')
 
-with open('conversion-tables/ivs-adobe-japan1.txt', 'rt', encoding='utf-8') as file:
-    IVS_TABLE = {}
-    
-    for line in file:
-        key_value = line.rstrip('\n').split('\t')
-        key = key_value[0]
-        value = key_value[1]
-        
-        IVS_TABLE[key] = value
-
-def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', convert_inherited=True, use_ivs=False) -> str:
+def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_inherited=True, use_ivs=False) -> str:
     if (not use_supp_planes) or (use_supp_planes not in {CORE, ALL}):
         raise TypeError
-    
     if not use_supp_planes:
         use_supp_planes = ''
     
-    compatibility_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
+    if use_compatibility:
+        compatibility_var_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
+        compatibility_order = [compatibility_var_map(i) for i in use_compatibility]
+    else:
+        compatibility_order = []
     
-    compatibility_order = [compatibility_map(i) for i in use_compatibility]
+    if use_ivs:
+        ivs_var_map = lambda x: {AJ1: AJ1_TABLE, MJ: MJ_TABLE}[x]
+        if use_ivs:
+            ivs_order = [ivs_var_map(i) for i in use_ivs]
+    else:
+        ivs_order = []
     
     returned = string
-    
     for char in string:
         value = char
         replace = False
@@ -124,9 +131,11 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
                     value = compatibility_table[value][0]
                     break
         else:
-            if use_ivs and value in IVS_TABLE:
-                value = IVS_TABLE[value]
-                replace = True
+            for ivs_table in ivs_order:
+                if value in ivs_table:
+                    value = ivs_table[value]
+                    replace = True
+                    break
         
         if replace:
             returned = returned.replace(char, value)
