@@ -86,6 +86,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         value = char
         replace = False
         
+        # initial conversion
+        
         if value in VARIANTS_TABLE:
             attr = VARIANTS_TABLE[value][1]
             
@@ -104,8 +106,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility='jkt', conver
         elif char in RADICALS_VARIANTS_TABLE:
             value = RADICALS_VARIANTS_TABLE[value]
             replace = True
-            returned = returned.replace(char, value)
-            continue
+        
+        # compatibility variants/IVS conversion
         
         for compatibility_table in compatibility_order:
             if value in compatibility_table:
