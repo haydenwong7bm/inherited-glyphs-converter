@@ -27,6 +27,7 @@ def _read_tsv(path):
     with open(path, 'rt', encoding='utf-8') as file:
         for line in file:
             key_value = line.rstrip('\n').split('\t')
+            
             key = key_value[0]
             value = key_value[1]
             
@@ -70,10 +71,11 @@ IVS_AJ1_TABLE = _read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MJ_TABLE = _read_tsv('conversion-tables/ivs-moji-joho.txt')
 
 def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_inherited=True, use_ivs=False) -> str:
-    if (not use_supp_planes) or (use_supp_planes not in {CORE, ALL}):
-        raise TypeError
     if not use_supp_planes:
         use_supp_planes = ''
+    
+    if use_supp_planes not in {'', CORE, ALL}:
+        raise TypeError
     
     if use_compatibility:
         compatibility_var_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
@@ -82,9 +84,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
         compatibility_order = []
     
     if use_ivs:
-        ivs_var_map = lambda x: {AJ1: AJ1_TABLE, MJ: MJ_TABLE}[x]
-        if use_ivs:
-            ivs_order = [ivs_var_map(i) for i in use_ivs]
+        ivs_var_map = lambda x: {AJ1: IVS_AJ1_TABLE, MJ: IVS_MJ_TABLE}[x]
+        ivs_order = [ivs_var_map(i) for i in use_ivs]
     else:
         ivs_order = []
     
