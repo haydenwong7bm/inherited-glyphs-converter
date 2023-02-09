@@ -89,6 +89,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
     else:
         ivs_order = []
     
+    replaced_cache = set()
+    
     returned = string
     for char in string:
         value = char
@@ -96,10 +98,10 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
         
         # initial conversion
         
-        if value in VARIANTS_TABLE:
-            attr = VARIANTS_TABLE[value][1]
+        if char in VARIANTS_TABLE:
+            value, attr = VARIANTS_TABLE[value]
             
-            if _check_supp(value, VARIANTS_TABLE[value][0]):
+            if _check_supp(char, value):
                 replace = bool(use_supp_planes)
                 if use_supp_planes == CORE:
                     replace = use_supp_planes in attr
@@ -108,20 +110,17 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
             
             if replace and (INHERITED in attr):
                 replace = convert_inherited
-                
-            if replace:
-                value = VARIANTS_TABLE[value][0]
         elif char in RADICALS_VARIANTS_TABLE:
-            value = RADICALS_VARIANTS_TABLE[value]
+            value = RADICALS_VARIANTS_TABLE[char]
             replace = True
         
         # compatibility variants/IVS conversion
         
         for compatibility_table in compatibility_order:
             if value in compatibility_table:
-                attr = compatibility_table[value][1]
+                value_new, attr = compatibility_table[value]
                 
-                if _check_supp(value, compatibility_table[value][0]):
+                if _check_supp(value, value_new):
                     replace = bool(use_supp_planes)
                     if use_supp_planes == CORE:
                         replace = use_supp_planes in attr
@@ -129,7 +128,7 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
                     replace = True
                 
                 if replace:
-                    value = compatibility_table[value][0]
+                    value = value_new
                     break
         else:
             for ivs_table in ivs_order:
@@ -138,7 +137,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
                     replace = True
                     break
         
-        if replace:
+        if replace and char not in replaced_cache:
             returned = returned.replace(char, value)
+            replaced_cache.add(char)
     
     return returned
