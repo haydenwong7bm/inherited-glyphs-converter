@@ -93,52 +93,53 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
     
     returned = string
     for char in string:
-        value = char
-        replace = False
-        
-        # initial conversion
-        
-        if char in VARIANTS_TABLE:
-            value, attr = VARIANTS_TABLE[value]
+        if char not in replaced_cache:
+            value = char
+            replace = False
             
-            if _check_supp(char, value):
-                replace = bool(use_supp_planes)
-                if use_supp_planes == CORE:
-                    replace = use_supp_planes in attr
-            else:
-                replace = True
+            # initial conversion
             
-            if replace and (INHERITED in attr):
-                replace = convert_inherited
-        elif char in RADICALS_VARIANTS_TABLE:
-            value = RADICALS_VARIANTS_TABLE[char]
-            replace = True
-        
-        # compatibility variants/IVS conversion
-        
-        for compatibility_table in compatibility_order:
-            if value in compatibility_table:
-                value_new, attr = compatibility_table[value]
+            if char in VARIANTS_TABLE:
+                value, attr = VARIANTS_TABLE[value]
                 
-                if _check_supp(value, value_new):
+                if _check_supp(char, value):
                     replace = bool(use_supp_planes)
                     if use_supp_planes == CORE:
                         replace = use_supp_planes in attr
                 else:
                     replace = True
                 
-                if replace:
-                    value = value_new
-                    break
-        else:
-            for ivs_table in ivs_order:
-                if value in ivs_table:
-                    value = ivs_table[value]
-                    replace = True
-                    break
-        
-        if replace and char not in replaced_cache:
-            returned = returned.replace(char, value)
-            replaced_cache.add(char)
+                if replace and (INHERITED in attr):
+                    replace = convert_inherited
+            elif char in RADICALS_VARIANTS_TABLE:
+                value = RADICALS_VARIANTS_TABLE[char]
+                replace = True
+            
+            # compatibility variants/IVS conversion
+            
+            for compatibility_table in compatibility_order:
+                if value in compatibility_table:
+                    value_new, attr = compatibility_table[value]
+                    
+                    if _check_supp(value, value_new):
+                        replace = bool(use_supp_planes)
+                        if use_supp_planes == CORE:
+                            replace = use_supp_planes in attr
+                    else:
+                        replace = True
+                    
+                    if replace:
+                        value = value_new
+                        break
+            else:
+                for ivs_table in ivs_order:
+                    if value in ivs_table:
+                        value = ivs_table[value]
+                        replace = True
+                        break
+            
+            if replace:
+                returned = returned.replace(char, value)
+                replaced_cache.add(char)
     
     return returned
