@@ -34,9 +34,9 @@
  | `convert_inherited` | 如設爲`True`，將轉換其他異體字（例如：祕 → 祕、裡 → 裏） | `True` |
  | `use_supp` | 參數値可爲`False`、`'c'`、或`'*'`。<br>`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>`*`：於輔助平面中，使用所有字符。 | `'c'` |
  | `use_ivs` | 一個含有`'aj1'`及／或`'mj'`的字串。<br>`'aj1'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'mj'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
- 
+	
 	>>> from inheritedglyphs import *
-	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
+	>>> string = '夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、鿄朝、陳朝、隋朝、唐朝、後鿄、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、清朝'
 	>>> print(convert(string))
 	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晉、後漢、後周、北宋、南宋、元朝、明朝、淸朝
 	>>> print(convert(string, use_compatibility='j')) # 不使用韓國及CNS相容表意文字
