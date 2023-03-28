@@ -17,9 +17,8 @@
  
  | **Options** | **Usage** | **Default value if `-o` not provided** |
  |---|---|---|
- | `-o` | Set options below if this argument is provided. | |
  | `-c` | A string that contains `j`, `k` or `t`.<br>`j`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`k`: Use Korean compatibility ideographs.<br>`t`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `jkt` |
- | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes. | `c` |
+ | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes.<br>If `value` is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
  | `-i` | Convert other inherited variants (e.g. 秘 → 祕, 裡 → 裏). | `True` |
  | `-I` | A sequence of string, which uses IVS conversion.<br>`'aj1'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>`'mj'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).  | `False` |
  
@@ -36,11 +35,8 @@
  | `use_ivs` | An iterable that contains `'aj1'`, and/or `'mj'`.<br>`'aj1'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>`'mj'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | `False` |
  
 	>>> from inheritedglyphs import *
-	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
+	>>> string = '夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、鿄朝、陳朝、隋朝、唐朝、後鿄、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、清朝'
 	>>> print(convert(string))
-	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。」
+	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晉、後漢、後周、北宋、南宋、元朝、明朝、淸朝
 	>>> print(convert(string, use_compatibility='j')) # don't use Korean and CNS compatibility ideographs
-	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。
-	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
-	>>> print(convert(string, convert_inherited=False))
-	李白（唐‧五言絕句）《靜夜思》：「床前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、淸朝

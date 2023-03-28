@@ -17,10 +17,8 @@
  
  | **選項** | **功能** | **預設値，如不設定`-o`選項** |
  |---|---|---|
- | `-o` | 設定下列選項。 | |
- | `-c` | 一個含有`'j'`、`'k'`及／或`'t'`的字串。<br>`j`：使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使用韓國相容表意文字。<br>`t`：使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。 | `jkt` |
- | `-s <value>` | 如`value`爲`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。
- 如`value`爲`*`：於輔助平面中，使用所有字符。| `c` |
+ | `-c` | 一個含有`'j'`、`'k'`及／或`'t'`的字串，或者`_`。<br>`j`：使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使用韓國相容表意文字。<br>`t`：使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。<br>`_`：不使用相容表意文字。 | `jkt` |
+ | `-s <value>` | 如`value`爲`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>如`value`爲`*`：於輔助平面中，使用所有字符。<br>如`value`爲`_`：只使用基本平面字符。 | `c` |
  | `-i` | 轉換其他異體字（例如：秘 → 祕、裡 → 裏） | `True` |
  | `-I`或`--ivs` | 一組字串，以異體字選擇器序列轉換。<br>`'aj1'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'mj'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
  
@@ -40,9 +38,6 @@
 	>>> from inheritedglyphs import *
 	>>> string = '教育及青年發展局是澳門特區政府社會文化司成立的公共部門。'
 	>>> print(convert(string))
-	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。」
+	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晉、後漢、後周、北宋、南宋、元朝、明朝、淸朝
 	>>> print(convert(string, use_compatibility='j')) # 不使用韓國及CNS相容表意文字
-	敎育及靑年發展局是澳門特區政府社會文化司成立的公共部門。
-	>>> string = '李白（唐‧五言絶句）《靜夜思》：「床前明月光，疑是地上霜，舉頭望明月，低頭思故鄉。」'
-	>>> print(convert(string, convert_inherited=False))
-	李白（唐‧五言絕句）《靜夜思》：「床前明月光，疑是地上霜，擧頭望明月，低頭思故鄕。」
+	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、淸朝
