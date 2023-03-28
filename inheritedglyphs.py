@@ -1,7 +1,7 @@
 from collections import defaultdict
 import re
 
-__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'INHERITED', 'AJ1', 'MJ']
+__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AJ1', 'MJ']
 
 CORE = 'c'
 ALL = '*'
@@ -10,7 +10,7 @@ J = 'j'
 K = 'k'
 T = 't'
 
-INHERITED = 'i'
+NOT_UNIFIABLE = 'n'
 
 AJ1 = 'aj1'
 MJ = 'mj'
@@ -70,7 +70,7 @@ RADICALS_VARIANTS_TABLE = _read_tsv('conversion-tables/radicals.txt')
 IVS_AJ1_TABLE = _read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MJ_TABLE = _read_tsv('conversion-tables/ivs-moji-joho.txt')
 
-def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_inherited=True, use_ivs=False) -> str:
+def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_not_unifiable=True, use_ivs=False) -> str:
     if not use_supp_planes:
         use_supp_planes = ''
     
@@ -109,8 +109,8 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
                 else:
                     replace = True
                 
-                if replace and (INHERITED in attr):
-                    replace = convert_inherited
+                if replace and (NOT_UNIFIABLE in attr):
+                    replace = convert_not_unifiable
             elif char in RADICALS_VARIANTS_TABLE:
                 value = RADICALS_VARIANTS_TABLE[char]
                 replace = True
