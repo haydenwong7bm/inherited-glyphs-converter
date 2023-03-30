@@ -35,8 +35,8 @@
  | `use_ivs` | An iterable that contains `'aj1'`, and/or `'mj'`.<br>`'aj1'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>`'mj'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | `False` |
  
 	>>> from inheritedglyphs import *
-	>>> string = '夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、鿄朝、陳朝、隋朝、唐朝、後鿄、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、清朝'
+	>>> string = '寒來暑往，秋收冬藏。閏餘成歳，律吕調陽。雲騰致雨，露結為霜。金生麗水，玉出崑崗。'
 	>>> print(convert(string))
-	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晉、後漢、後周、北宋、南宋、元朝、明朝、淸朝
+	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
 	>>> print(convert(string, use_compatibility='j')) # don't use Korean and CNS compatibility ideographs
-	夏朝、商朝、西周、東周、秦朝、西漢、東漢、曹魏、西晋、東晋、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、後梁、後唐、後晋、後漢、後周、北宋、南宋、元朝、明朝、淸朝
+	寒來暑往，秋收冬藏。閏餘成歳，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
