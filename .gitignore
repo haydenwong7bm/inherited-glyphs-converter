@@ -1,6 +1,4 @@
 *-converted.txt
 *.pyc
-test.txt
+test*
 scripts
-test.bat
-test_ivs.bat
