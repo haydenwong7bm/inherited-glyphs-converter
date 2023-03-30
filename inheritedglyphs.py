@@ -89,11 +89,11 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
     else:
         ivs_order = []
     
-    replaced_cache = set()
+    char_cache = set()
     
     returned = string
     for char in string:
-        if char not in replaced_cache:
+        if char not in char_cache:
             value = char
             replace = False
             
@@ -140,6 +140,7 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
             
             if replace:
                 returned = returned.replace(char, value)
-                replaced_cache.add(char)
+            
+            char_cache.add(char)
     
     return returned
