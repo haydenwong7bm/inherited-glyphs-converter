@@ -70,7 +70,7 @@ RADICALS_VARIANTS_TABLE = _read_tsv('conversion-tables/radicals.txt')
 IVS_AJ1_TABLE = _read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MJ_TABLE = _read_tsv('conversion-tables/ivs-moji-joho.txt')
 
-def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_not_unifiable=True, use_ivs=False) -> str:
+def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], convert_not_unifiable=True, use_ivs=False, punctation_align_center=False) -> str:
     if not use_supp_planes:
         use_supp_planes = ''
     
@@ -88,6 +88,13 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
         ivs_order = [ivs_var_map(i) for i in use_ivs]
     else:
         ivs_order = []
+    
+    # remove existing variation selectors
+    
+    for i in [*range(0xfe00, 0xfe0f+1), *range(0xe0100, 0xe01ef+1)]:
+        string = string.replace(chr(i), '')
+    
+    # start conversion
     
     char_cache = set()
     
@@ -137,6 +144,12 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
                         value = ivs_table[value]
                         replace = True
                         break
+            
+            # punctation centralize
+            
+            if punctation_align_center and char in '、。！，．：；？':
+                value = f'{char}\ufe01'
+                replace = True
             
             if replace:
                 returned = returned.replace(char, value)
