@@ -15,12 +15,13 @@
  
  命令列選項：
  
- | **選項** | **功能** | **預設値，如不設定`-o`選項** |
+ | **選項** | **功能** | **預設値** |
  |---|---|---|
  | `-c` | 一個含有`'j'`、`'k'`及／或`'t'`的字串，或者`_`。<br>`j`：使用日本[相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使用韓國相容表意文字。<br>`t`：使用[CNS 11643相容表意文字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。<br>`_`：不使用相容表意文字。 | `jkt` |
  | `-s <value>` | 如`value`爲`c`：於輔助平面中，只使用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>如`value`爲`*`：於輔助平面中，使用所有字符。<br>如`value`爲`_`：只使用基本平面字符。 | `c` |
  | `-n` | 轉換Unicode不能統一的字（例如：秘 → 祕、峰 → 峯） | `True` |
- | `-I`或`--ivs` | 一組字串，以異體字選擇器序列轉換。<br>`'aj1'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'mj'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
+ | `-i` | 一組字串，以異體字選擇器序列轉換。<br>`'aj1'`：使用[Adobe-Japan1異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)<br>`'mj'`：使用[Moji-Joho異體字選擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf) | `False` |
+ | `-p` | 把標點符號置中。 | |
  
  ### 導入模組
  
