@@ -21,7 +21,7 @@ if args.supp == '_':
     args.supp = False
 
 for file in args.file:
-    filename, file_ext = path.splitext(path.basename(file))
+    filename, file_ext = path.splitext(file)
     with (open(file, 'rt') as input_file,
         open(f'{filename}-converted{file_ext}', 'wt') as output_file):
         contents = input_file.read()
