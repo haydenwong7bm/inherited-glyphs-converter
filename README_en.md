@@ -15,7 +15,7 @@
 	
  Command line arguments:
  
- | **Options** | **Usage** | **Default value |
+ | **Options** | **Usage** | **Default value** |
  |---|---|---|
  | `-c` | A string that contains `j`, `k` or `t`, or `_`.<br>`j`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`k`: Use Korean compatibility ideographs.<br>`t`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement).<br>`_`: Not to use compatibility ideographs. | `jkt` |
  | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes.<br>If `value` is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
