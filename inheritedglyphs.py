@@ -145,6 +145,9 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
                         replace = True
                         break
             
+            char_cache.add(char)
+            char_cache.add(value[0])
+            
             # punctation centralize
             
             if punctation_align_center and char in '、。！，．：；？':
@@ -153,7 +156,5 @@ def convert(string: str, *, use_supp_planes='c', use_compatibility=[J, K, T], co
             
             if replace:
                 returned = returned.replace(char, value)
-            
-            char_cache.add(char)
     
     return returned
