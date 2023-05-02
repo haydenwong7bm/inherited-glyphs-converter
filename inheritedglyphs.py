@@ -156,7 +156,7 @@ def convert(string: str, *, supp_planes='c', compatibility=[J, K, T], convert_no
                 if bool(supp_planes):
                     value = value_new
             else:
-               value = value_new
+                value = value_new
             
             if not alternate and replace_alternate:
                 char, value = value, char
