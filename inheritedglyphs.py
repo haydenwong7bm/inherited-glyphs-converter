@@ -73,7 +73,7 @@ RADICALS_VARIANTS_TABLE = read_tsv('conversion-tables/radicals.txt')
 IVS_AJ1_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MJ_TABLE = read_tsv('conversion-tables/ivs-moji-joho.txt')
 
-def convert(string: str, *, supp_planes='c', compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, ivs=False, punctation_align_center=False) -> str:
+def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, ivs=False, punctation_align_center=False) -> str:
     if not supp_planes:
         supp_planes = ''
     
@@ -161,7 +161,7 @@ def convert(string: str, *, supp_planes='c', compatibility=[J, K, T], convert_no
             if not alternate and replace_alternate:
                 char, value = value, char
             
-            if ord(char) <= 0xffff and ord(value) > 0xffff:
+            if ord(char[0]) <= 0xffff and ord(value[0]) > 0xffff:
                 replace = bool(supp_planes)
                 if supp_planes == CORE:
                     replace = value in SUPP_CORE_LIST
