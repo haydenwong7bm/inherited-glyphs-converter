@@ -1,7 +1,7 @@
 from collections import defaultdict
 import re
 
-__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AJ1', 'MJ']
+__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO']
 
 CORE = 'c'
 ALL = '*'
@@ -14,8 +14,9 @@ ALTERNATE = 'v'
 
 NOT_UNIFIABLE = 'n'
 
-AJ1 = 'aj1'
-MJ = 'mj'
+AD = 'ad'
+MO = 'mo'
+MS = 'ms'
 
 def read_tsv(path):
     returned = {}
@@ -70,8 +71,9 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
             SUPP_CORE_LIST.add(value)
 
 RADICALS_VARIANTS_TABLE = read_tsv('conversion-tables/radicals.txt')
-IVS_AJ1_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
-IVS_MJ_TABLE = read_tsv('conversion-tables/ivs-moji-joho.txt')
+IVS_AD_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
+IVS_MO_TABLE = read_tsv('conversion-tables/ivs-moji-joho.txt')
+IVS_MS_TABLE = read_tsv('conversion-tables/ivs-mscs.txt')
 
 def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, ivs=False, punctation_align_center=False) -> str:
     if not supp_planes:
@@ -87,7 +89,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
         compatibility_order = []
     
     if ivs:
-        ivs_var_map = lambda x: {AJ1: IVS_AJ1_TABLE, MJ: IVS_MJ_TABLE}[x]
+        ivs_var_map = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
         ivs_order = [ivs_var_map(i) for i in ivs]
     else:
         ivs_order = []
