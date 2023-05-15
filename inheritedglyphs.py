@@ -91,13 +91,12 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     if ivs:
         ivs_var_map = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
         ivs_order = [ivs_var_map(i) for i in ivs]
+        
+        # remove existing variation selectors
+        for i in [*range(0xfe00, 0xfe0f+1), *range(0xe0100, 0xe01ef+1)]:
+            string = string.replace(chr(i), '')
     else:
         ivs_order = []
-    
-    # remove existing variation selectors
-    
-    for i in [*range(0xfe00, 0xfe0f+1), *range(0xe0100, 0xe01ef+1)]:
-        string = string.replace(chr(i), '')
     
     # start conversion
     
