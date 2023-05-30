@@ -72,7 +72,7 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
 
 RADICALS_VARIANTS_TABLE = read_tsv('conversion-tables/radicals.txt')
 IVS_AD_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
-IVS_MO_TABLE = read_tsv('conversion-tables/ivs-moji-joho.txt')
+IVS_MO_TABLE = None # read_tsv('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_tsv('conversion-tables/ivs-mscs.txt')
 
 def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, ivs=False, punctation_align_center=False) -> str:
@@ -89,6 +89,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
         compatibility_order = []
     
     if ivs:
+        if 'mo' in ivs:
+            raise NotImplementedError('Moji-Joho IVS conversion is temporarily removed due to inadequate conversion table')
         ivs_var_map = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
         ivs_order = [ivs_var_map(i) for i in ivs]
         
