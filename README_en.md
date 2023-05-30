@@ -21,10 +21,7 @@
  | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes.<br>If `value` is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
  | `-n` | Convert inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 峰 → 峯). | `True` |
  | `-v` | Uses commonly-seen variant inherited forms (e.g. 益 → 益, 免 → 免). | `False` |
- | `-i` | Uses IVS conversion. Parameters:<br>
- `'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>
- ~~`'mo'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~
- `'ms'`: Use the [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
+ | `-i` | Uses IVS conversion. Parameters:<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~`'ms'`: Use the [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
  | `-p` | Center align the punctation. | `False` |
  
  ### Import module
@@ -35,7 +32,7 @@
  | **Arguments** | **Usage** | **Default value** |
  |---|---|---|
  | `compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
- | `convert_not_unifiable` | If `True`, it will convert other inherited variants (e.g. 祕 → 祕, 裡 → 裏). | `True` |
+ | `convert_not_unifiable` | If `True`, it will convert other inherited variants (e.g. 祕 → 祕, 峰 → 峯). | `True` |
  | `supp_planes` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters.<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
  | `ivs` | An (ordered) iterable that contains one or more of the following, or `False`.<br>
  `'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>
