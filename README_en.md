@@ -25,6 +25,7 @@
  | `-p` | Center align the punctation. | `False` |
  
  ### Import module
+ 
  The `inheritedglyphs` module provides a single function `convert()` which converts a string to their inherited glyphs form.
  
  Function arguments:
