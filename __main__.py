@@ -21,6 +21,9 @@ if args.compat == '_':
 if args.supp == '_':
     args.supp = False
 
+if not args.file:
+    raise ValueError('file is missing')
+
 for file in args.file:
     filename, file_ext = path.splitext(file)
     with (open(file, 'rt') as input_file,
