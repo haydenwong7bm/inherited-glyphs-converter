@@ -10,6 +10,8 @@ J = 'j'
 K = 'k'
 T = 't'
 
+IVS_COMP_CLASH = "'"
+
 ALTERNATE = 'v'
 
 NOT_UNIFIABLE = 'n'
@@ -130,14 +132,18 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             value_new = value
             for compatibility_table in compatibility_order:
-                if value_new in compatibility_table:
+                if value in compatibility_table:
                     value_new, attr = compatibility_table[value]
                     
                     if ALTERNATE in attr:
                         replace_alternate = True
                     
-                    replace = True
-                    break
+                    if (ivs and (K in compatibility) and (IVS_COMP_CLASH in attr)):
+                        value_new = value
+                        continue
+                    else:
+                        replace = True
+                        break
             else:
                 for ivs_table in ivs_order:
                     if value_new in ivs_table:
@@ -146,7 +152,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                         replace = True
                         break
             
-            # centralize punctation
+            # centralize punctation marks
             
             if punctation_align_center and char in '、。！，．：；？':
                 value = f'{char}\ufe01'
