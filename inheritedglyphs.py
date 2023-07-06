@@ -86,9 +86,10 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     if compatibility:
         compatibility_var_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
-        compatibility_order = [compatibility_var_map(i) for i in compatibility]
+        compatibility_tables = [compatibility_var_map(i) for i in compatibility]
     else:
-        compatibility_order = []
+        compatibility_tables = []
+        compatibility = []
     
     if ivs:
         if 'mo' in ivs:
@@ -131,7 +132,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             # compatibility variants/IVS conversion
             
             value_new = value
-            for compatibility_table in compatibility_order:
+            for compatibility_table in compatibility_tables:
                 if value in compatibility_table:
                     value_new, attr = compatibility_table[value]
                     
