@@ -86,22 +86,22 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     if compatibility:
         compatibility_var_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
-        compatibility_tables = [compatibility_var_map(i) for i in compatibility]
+        compatibility_tables_ordered = [compatibility_var_map(i) for i in compatibility]
     else:
-        compatibility_tables = []
+        compatibility_tables_ordered = []
         compatibility = []
     
     if ivs:
         if 'mo' in ivs:
             raise NotImplementedError('Moji-Joho IVS conversion is temporarily removed due to inadequate conversion table')
         ivs_var_map = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
-        ivs_order = [ivs_var_map(i) for i in ivs]
+        ivs_tables_ordered = [ivs_var_map(i) for i in ivs]
         
         # remove existing variation selectors
         for i in [*range(0xfe00, 0xfe0f+1), *range(0xe0100, 0xe01ef+1)]:
             string = string.replace(chr(i), '')
     else:
-        ivs_order = []
+        ivs_tables_ordered = []
     
     # start conversion
     
@@ -132,23 +132,23 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             # compatibility variants/IVS conversion
             
             value_new = value
-            for compatibility_table in compatibility_tables:
+            for compatibility_table in compatibility_tables_ordered:
                 if value in compatibility_table:
                     value_new, attr = compatibility_table[value]
-                    
-                    if ALTERNATE in attr:
-                        replace_alternate = True
                     
                     if (ivs and (K in compatibility) and (IVS_COMP_CLASH in attr)):
                         value_new = value
                         continue
                     else:
+                        if ALTERNATE in attr:
+                            replace_alternate = True
+                        
                         replace = True
                         break
             else:
-                for ivs_table in ivs_order:
-                    if value_new in ivs_table:
-                        value_new = ivs_table[value]
+                for ivs_table in ivs_tables_ordered:
+                    if value in ivs_table:
+                        value = ivs_table[value]
                         
                         replace = True
                         break
