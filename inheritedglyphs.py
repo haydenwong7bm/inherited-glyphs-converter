@@ -148,7 +148,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             else:
                 for ivs_table in ivs_tables_ordered:
                     if value in ivs_table:
-                        value = ivs_table[value]
+                        value_new = ivs_table[value]
                         
                         replace = True
                         break
