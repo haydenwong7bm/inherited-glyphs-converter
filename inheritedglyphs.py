@@ -106,18 +106,19 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     # start conversion
     
     char_cache = set()
-    
     returned = string
+    
     for char in string:
         if char not in char_cache:
-            value = char
+            converted_value = char
+            
             replace = False
             replace_alternate = False
             
             # initial conversion
             
             if char in VARIANTS_TABLE:
-                value, attr = VARIANTS_TABLE[value]
+                converted_value, attr = VARIANTS_TABLE[char]
                 
                 replace = True
                 if replace and (NOT_UNIFIABLE in attr):
@@ -126,57 +127,60 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                 if ALTERNATE in attr:
                     replace_alternate = True
             elif char in RADICALS_VARIANTS_TABLE:
-                value = RADICALS_VARIANTS_TABLE[char]
+                converted_value = RADICALS_VARIANTS_TABLE[char]
+                
                 replace = True
             
             # compatibility variants/IVS conversion
             
-            value_new = value
+            value_base = converted_value
+            converted_ivs = ''
+            
             for compatibility_table in compatibility_tables_ordered:
-                if value in compatibility_table:
-                    value_new, attr = compatibility_table[value]
+                if value_base in compatibility_table:
+                    value, attr = compatibility_table[value_base]
                     
                     if (ivs and (K in compatibility) and (IVS_COMP_CLASH in attr)):
-                        value_new = value
+                        converted_value = value_base
                         continue
                     else:
                         if ALTERNATE in attr:
                             replace_alternate = True
                         
+                        converted_value = value
+                        
                         replace = True
                         break
             else:
                 for ivs_table in ivs_tables_ordered:
-                    if value in ivs_table:
-                        value_new = ivs_table[value]
+                    if value_base in ivs_table:
+                        converted_ivs = ivs_table[value_base]
                         
                         replace = True
                         break
             
-            # centralize punctation marks
-            
-            if punctation_align_center and char in '、。！，．：；？':
-                value = f'{char}\ufe01'
-                replace = True
-            
             char_cache.add(char)
-            char_cache.add(value[0])
-            
-            if ord(char) <= 0xffff and ord(value_new[0]) > 0xffff:
-                if bool(supp_planes):
-                    value = value_new
-            else:
-                value = value_new
+            char_cache.add(value_base)
+            char_cache.add(converted_value)
             
             if not alternate and replace_alternate:
-                char, value = value, char
+                char, converted_value = converted_value, char
             
-            if ord(char[0]) <= 0xffff and ord(value[0]) > 0xffff:
-                replace = bool(supp_planes)
+            if ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
                     replace = value in SUPP_CORE_LIST
+                else:
+                    replace = bool(supp_planes)
+            
+            if converted_ivs:
+                converted_value = converted_ivs
+            
+            # centralize punctation symbols
+            if punctation_align_center and char in '、。！，．：；？':
+                converted_value = f'{char}\ufe01'
+                replace = True
             
             if replace:
-                returned = returned.replace(char, value)
+                returned = returned.replace(char, converted_value)
     
     return returned
