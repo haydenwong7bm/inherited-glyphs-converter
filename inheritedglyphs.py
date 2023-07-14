@@ -160,7 +160,6 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                         break
             
             char_cache.add(char)
-            char_cache.add(value_base)
             char_cache.add(converted_value)
             
             if not alternate and replace_alternate:
