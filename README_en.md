@@ -19,8 +19,8 @@
  |---|---|---|
  | `-c` | A string that contains `j`, `k` or `t`, or `_`.<br>`j`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`k`: Use Korean compatibility ideographs.<br>`t`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement).<br>`_`: Not to use compatibility ideographs. | `jkt` |
  | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes.<br>If `value` is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
- | `-n` | Convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 峰 → 峯). | `True` |
- | `-v` | Uses commonly-seen variant inherited forms (e.g. 益 → 益, 免 → 免). | `False` |
+ | `-n` | Not to convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 峰 → 峯). | |
+ | `-v` | Uses commonly-seen variant inherited forms (e.g. 免 → 免). | |
  | `-i` | Uses IVS conversion. Parameters:<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: Use the [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
  | `-p` | Center align the punctation. | `False` |
  

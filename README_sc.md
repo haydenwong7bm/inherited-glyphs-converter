@@ -19,10 +19,10 @@
  |---|---|---|
  | `-c` | 一个含有`'j'`、`'k'`及󠄁／或`'t'`的󠄁字符串，或者`_`。<br>`j`：使󠄁用日本[兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使󠄁用韩国兼󠄁容表意󠄁文󠄁字。<br>`t`：使󠄁用[CNS 11643兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。<br>`_`：不使󠄁用兼󠄁容表意󠄁文󠄁字。 | `jkt` |
  | `-s <value>` | 如`value`为`c`：于辅助平󠄁面中，只使󠄁用[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)字符。<br>如`value`为`*`：于辅助平󠄁面中，使󠄁用所󠄁有字符。<br>如`value`为`_`：只使󠄁用基本平󠄁面字符。 | `c` |
- | `-n` | 转換Unicode不能统一的󠄁字（例如：秘 → 祕、峰 → 峯） | `True` |
- | `-v` | 选用常见异体传承字形（例如：益 → 益、免 → 免）。 | `False` |
+ | `-n` | 不转換Unicode不能统一的󠄁字（例如：秘 → 祕、峰 → 峯） | |
+ | `-v` | 选用常见异体传承字形（例如：免 → 免）。 | |
  | `-i` | 选用异体字选择器串行转換。参数列表：<br>`'ad'`：使󠄁用[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：使󠄁用[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：使󠄁用[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
- | `-p` | 把标点符号置中。 | `False` |
+ | `-p` | 把标点符号置中。 | |
  
  ### 导入模组
  
