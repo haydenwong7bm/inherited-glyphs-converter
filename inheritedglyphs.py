@@ -1,5 +1,6 @@
 from collections import defaultdict
 import re
+import unicodedata
 
 __all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO']
 
@@ -72,7 +73,8 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
         if CORE in attr:
             SUPP_CORE_LIST.add(value)
 
-RADICALS_VARIANTS_TABLE = read_tsv('conversion-tables/radicals.txt')
+COMPATIBILITY_CORRECTED_MAPPING = read_tsv('conversion-tables/compatibility_corrected_mapping.txt')
+
 IVS_AD_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MO_TABLE = None # read_tsv('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_tsv('conversion-tables/ivs-mscs.txt')
@@ -85,8 +87,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
         raise TypeError
     
     if compatibility:
-        compatibility_var_map = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
-        compatibility_tables_ordered = [compatibility_var_map(i) for i in compatibility]
+        map_ = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
+        compatibility_tables_ordered = [map_(i) for i in compatibility]
     else:
         compatibility_tables_ordered = []
         compatibility = []
@@ -94,14 +96,30 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     if ivs:
         if 'mo' in ivs:
             raise NotImplementedError('Moji-Joho IVS conversion is temporarily removed due to inadequate conversion table')
-        ivs_var_map = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
-        ivs_tables_ordered = [ivs_var_map(i) for i in ivs]
-        
-        # remove existing variation selectors
-        for i in [*range(0xfe00, 0xfe0f+1), *range(0xe0100, 0xe01ef+1)]:
-            string = string.replace(chr(i), '')
+            
+        map_ = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
+        ivs_tables_ordered = [map_(i) for i in ivs]
     else:
         ivs_tables_ordered = []
+    
+    # remove existing variation selectors and normalize compatibility ideographs to unified ideographs first
+    
+    char_cache = set()
+    
+    for char in string:
+        if char not in char_cache:
+            if ivs and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)):
+                string = string.replace(char, '')
+            
+            if (0xf900 <= ord(char) <= 0xfaff) or (0x2f800 <= ord(char) <= 0x2fa1f):
+                if char in COMPATIBILITY_CORRECTED_MAPPING:
+                    value = COMPATIBILITY_CORRECTED_MAPPING[char]
+                else:
+                    value = unicodedata.normalize('NFKC', char)
+                
+                string = string.replace(char, value)
+            
+            char_cache.add(char)
     
     # start conversion
     
@@ -110,26 +128,22 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     for char in string:
         if char not in char_cache:
+            # initial conversion
+            
             converted_value = char
             
-            replace = False
-            replace_alternate = False
-            
-            # initial conversion
+            no_replace = False
+            academic_variant = False
+            alternate_variant = False
             
             if char in VARIANTS_TABLE:
                 converted_value, attr = VARIANTS_TABLE[char]
                 
-                replace = True
-                if replace and (NOT_UNIFIABLE in attr):
-                    replace = convert_not_unifiable
-                    
-                if ALTERNATE in attr:
-                    replace_alternate = True
-            elif char in RADICALS_VARIANTS_TABLE:
-                converted_value = RADICALS_VARIANTS_TABLE[char]
+                if NOT_UNIFIABLE in attr:
+                    no_replace = not convert_not_unifiable
                 
-                replace = True
+                if ALTERNATE in attr:
+                    alternate_variant = True
             
             # compatibility variants/IVS conversion
             
@@ -145,41 +159,42 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                         continue
                     else:
                         if ALTERNATE in attr:
-                            replace_alternate = True
+                            alternate_variant = True
                         
                         converted_value = value
                         
-                        replace = True
                         break
             else:
                 for ivs_table in ivs_tables_ordered:
                     if value_base in ivs_table:
                         converted_ivs = ivs_table[value_base]
                         
-                        replace = True
                         break
+            
+            # finalization
             
             char_cache.add(char)
             char_cache.add(converted_value)
             
-            if not alternate and replace_alternate:
+            if not alternate and alternate_variant:
                 char, converted_value = converted_value, char
             
-            if ord(char) <= 0xffff and ord(converted_value) > 0xffff:
+            if not no_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
-                    replace = value in SUPP_CORE_LIST
+                    no_replace = not (converted_value in SUPP_CORE_LIST)
                 else:
-                    replace = bool(supp_planes)
+                    no_replace = not bool(supp_planes)
             
             if converted_ivs:
                 converted_value = converted_ivs
             
             # centralize punctation symbols
+            
             if punctation_align_center and char in '、。！，．：；？':
                 converted_value = f'{char}\ufe01'
                 replace = True
             
-            if replace:
+            if char != converted_value and not no_replace:
                 returned = returned.replace(char, converted_value)
     
     return returned
