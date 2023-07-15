@@ -14,6 +14,9 @@ T = 't'
 IVS_COMP_CLASH = "'"
 
 ALTERNATE = 'v'
+ACADEMIC_CORRECT = 'a'
+
+REVERSE = '<'
 
 NOT_UNIFIABLE = 'n'
 
@@ -79,7 +82,7 @@ IVS_AD_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MO_TABLE = None # read_tsv('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_tsv('conversion-tables/ivs-mscs.txt')
 
-def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, ivs=False, punctation_align_center=False) -> str:
+def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, academic_correct=False, ivs=False, punctation_align_center=False) -> str:
     if not supp_planes:
         supp_planes = ''
     
@@ -133,8 +136,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             converted_value = char
             
             no_replace = False
-            academic_variant = False
-            alternate_variant = False
+            variant_set = None
+            reverse = False
             
             if char in VARIANTS_TABLE:
                 converted_value, attr = VARIANTS_TABLE[char]
@@ -143,7 +146,12 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                     no_replace = not convert_not_unifiable
                 
                 if ALTERNATE in attr:
-                    alternate_variant = True
+                    variant_set = ALTERNATE
+                elif ACADEMIC_CORRECT in attr:
+                    variant_set = ACADEMIC_CORRECT
+                    
+                if REVERSE in attr:
+                    reverse = True
             
             # compatibility variants/IVS conversion
             
@@ -159,7 +167,12 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                         continue
                     else:
                         if ALTERNATE in attr:
-                            alternate_variant = True
+                            variant_set = ALTERNATE
+                        elif ACADEMIC_CORRECT in attr:
+                            variant_set = ACADEMIC_CORRECT
+                        
+                        if REVERSE in attr:
+                            reverse = True
                         
                         converted_value = value
                         
@@ -176,8 +189,14 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             char_cache.add(char)
             char_cache.add(converted_value)
             
-            if not alternate and alternate_variant:
-                char, converted_value = converted_value, char
+            if not no_replace and not alternate:
+                no_replace = variant_set == ALTERNATE
+            
+            if not no_replace:
+                if academic_correct:
+                    no_replace = variant_set == ACADEMIC_CORRECT and reverse
+                else:
+                    no_replace = variant_set == ACADEMIC_CORRECT and not reverse
             
             if not no_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
