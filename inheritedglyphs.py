@@ -156,7 +156,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             # compatibility variants/IVS conversion
             
             value_base = converted_value
-            converted_ivs = ''
+            converted_ivs = None
             
             for compatibility_table in compatibility_tables_ordered:
                 if value_base in compatibility_table:
@@ -180,7 +180,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             else:
                 for ivs_table in ivs_tables_ordered:
                     if value_base in ivs_table:
-                        converted_ivs = ivs_table[value_base]
+                        if not (value_base == '益' and academic_correct):
+                            converted_ivs = ivs_table[value_base]
                         
                         break
             
