@@ -1,6 +1,5 @@
 import argparse
 import os.path as path
-import sys
 
 from inheritedglyphs import *
 
@@ -11,7 +10,7 @@ parser.add_argument('-s', '--supp', default='c')
 parser.add_argument('-n', '--not_unifiable', action='store_false')
 parser.add_argument('-v', '--alternate', action='store_true')
 parser.add_argument('-a', '--academic_correct', action='store_true')
-parser.add_argument('-i', '--ivs', nargs='*')
+parser.add_argument('-i', '--ivs', nargs='+')
 parser.add_argument('-p', '--punctation', action='store_true')
 
 args = parser.parse_args()
