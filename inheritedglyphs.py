@@ -38,6 +38,21 @@ def read_tsv(path):
     
     return returned
 
+def read_ivs_table(path):
+    returned = {}
+    
+    with open(path, 'rt', encoding='utf-8') as file:
+        for line in file:
+            key_value = line.rstrip('\n').split('\t')
+            
+            key = key_value[0]
+            value = key_value[1]
+            attr = key_value[2] if len(key_value) >= 3 else ''
+            
+            returned[key] = value, attr
+    
+    return returned
+
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = {}
     J_TABLE = {}
@@ -78,9 +93,9 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
 
 COMPATIBILITY_CORRECTED_MAPPING = read_tsv('conversion-tables/compatibility_corrected_mapping.txt')
 
-IVS_AD_TABLE = read_tsv('conversion-tables/ivs-adobe-japan1.txt')
-IVS_MO_TABLE = None # read_tsv('conversion-tables/ivs-moji-joho.txt')
-IVS_MS_TABLE = read_tsv('conversion-tables/ivs-mscs.txt')
+IVS_AD_TABLE = read_ivs_table('conversion-tables/ivs-adobe-japan1.txt')
+IVS_MO_TABLE = None # read_ivs_table('conversion-tables/ivs-moji-joho.txt')
+IVS_MS_TABLE = read_ivs_table('conversion-tables/ivs-mscs.txt')
 
 def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, academic_correct=False, ivs=False, punctation_align_center=False) -> str:
     if not supp_planes:
@@ -180,8 +195,15 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             else:
                 for ivs_table in ivs_tables_ordered:
                     if value_base in ivs_table:
-                        if not (value_base == '益' and academic_correct):
-                            converted_ivs = ivs_table[value_base]
+                        converted_ivs, attr = ivs_table[value_base]
+                        
+                        if ALTERNATE in attr:
+                            variant_set = ALTERNATE
+                        elif ACADEMIC_CORRECT in attr:
+                            variant_set = ACADEMIC_CORRECT
+                        
+                        if REVERSE in attr:
+                            reverse = True
                         
                         break
             
@@ -190,8 +212,11 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             char_cache.add(char)
             char_cache.add(converted_value)
             
-            if not no_replace and not alternate:
-                no_replace = variant_set == ALTERNATE
+            if not no_replace:
+                if alternate:
+                    no_replace = variant_set == ALTERNATE and reverse
+                else:
+                    no_replace = variant_set == ALTERNATE and not reverse
             
             if not no_replace:
                 if academic_correct:
@@ -205,7 +230,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                 else:
                     no_replace = not bool(supp_planes)
             
-            if converted_ivs:
+            if not no_replace and converted_ivs:
                 converted_value = converted_ivs
             
             # centralize punctation symbols
