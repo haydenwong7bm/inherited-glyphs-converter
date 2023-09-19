@@ -24,6 +24,8 @@ AD = 'ad'
 MO = 'mo'
 MS = 'ms'
 
+CENTERABLE_PUNCTATION = '、。！，．：；？'
+
 def read_tsv(path):
     returned = {}
     
@@ -52,6 +54,10 @@ def read_ivs_table(path):
             returned[key] = value, attr
     
     return returned
+
+def is_cjk(char):
+    ord_ = ord(char)
+    return (0x3400 <= ord_ <= 0x4dbf) or (0x4e00 <= ord_ <= 0x9fff) or (0xf900 <= ord_ <= 0xfaff) or (0x20000 <= ord_ <= 0x323af)
 
 with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = {}
@@ -124,20 +130,27 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     char_cache = set()
     
+    prev_char = None
+    pattern_cache = {None}
     for char in string:
-        if char not in char_cache:
-            if ivs and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)):
-                string = string.replace(char, '')
-            
-            if (0xf900 <= ord(char) <= 0xfaff) or (0x2f800 <= ord(char) <= 0x2fa1f):
-                if char in COMPATIBILITY_CORRECTED_MAPPING:
-                    value = COMPATIBILITY_CORRECTED_MAPPING[char]
-                else:
-                    value = unicodedata.normalize('NFKC', char)
+        pattern = 󠄀f'{prev_char}{char}'
+        if pattern not in pattern_cache:
+            if ivs and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)) and (is_cjk(prev_char) or prev_char in CENTERABLE_PUNCTATION):
+                string = string.replace(pattern, prev_char)
                 
-                string = string.replace(char, value)
+            pattern_cache.add(pattern)
             
-            char_cache.add(char)
+        prev_char = char
+        
+        if (0xf900 <= ord(char) <= 0xfaff) or (0x2f800 <= ord(char) <= 0x2fa1f):
+            if char in COMPATIBILITY_CORRECTED_MAPPING:
+                value = COMPATIBILITY_CORRECTED_MAPPING[char]
+            else:
+                value = unicodedata.normalize('NFKC', char)
+            
+            string = string.replace(char, value)
+        
+        prev_char = char
     
     # start conversion
     
@@ -235,7 +248,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             # centralize punctation symbols
             
-            if punctation_align_center and char in '、。！，．：；？':
+            if punctation_align_center and char in CENTERABLE_PUNCTATION:
                 converted_value = f'{char}\ufe01'
                 replace = True
             
