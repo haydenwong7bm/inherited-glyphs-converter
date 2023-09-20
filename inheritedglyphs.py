@@ -130,11 +130,11 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     char_cache = set()
     
-    prev_char = ''
+    prev_char = None
     for char in string:
-        pattern = 󠄀f'{prev_char}{char}'
-        if (ivs and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)) and is_cjk(prev_char)) or (prev_char in CENTERABLE_PUNCTATION):
-            string = string.replace(pattern, prev_char)
+        if prev_char and (ivs and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)) and is_cjk(prev_char)) or (prev_char in CENTERABLE_PUNCTATION):
+            prev_char
+            string = string.replace(f'{prev_char}{char}', prev_char)
         
         prev_char = char
         
