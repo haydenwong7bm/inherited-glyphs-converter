@@ -132,18 +132,23 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
     
     prev_char = None
     for char in string:
-        if ivs and prev_char and (is_cjk(prev_char) or prev_char in CENTERABLE_PUNCTATION) and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)):
-            string = string.replace(f'{prev_char}{char}', prev_char)
-        
-        prev_char = char
-        
-        if (0xf900 <= ord(char) <= 0xfaff) or (0x2f800 <= ord(char) <= 0x2fa1f):
-            if char in COMPATIBILITY_CORRECTED_MAPPING:
-                value = COMPATIBILITY_CORRECTED_MAPPING[char]
-            else:
-                value = unicodedata.normalize('NFKC', char)
+        if (prev_char, char) not in char_cache:
+            if ivs and prev_char and (is_cjk(prev_char) or prev_char in CENTERABLE_PUNCTATION) and ((0xfe00 <= ord(char) <= 0xfe0f) or (0xe0100 <= ord(char) <= 0xe01ef)):
+                string = string.replace(f'{prev_char}{char}', prev_char)
             
-            string = string.replace(char, value)
+        prev_char = char
+        char_cache.add((prev_char, char))
+        
+        if char not in char_cache:
+            if (0xf900 <= ord(char) <= 0xfaff) or (0x2f800 <= ord(char) <= 0x2fa1f):
+                if char in COMPATIBILITY_CORRECTED_MAPPING:
+                    value = COMPATIBILITY_CORRECTED_MAPPING[char]
+                else:
+                    value = unicodedata.normalize('NFKC', char)
+                
+                string = string.replace(char, value)
+        
+        char_cache.add(char)
         
     # start conversion
     
