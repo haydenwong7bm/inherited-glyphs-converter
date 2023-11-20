@@ -188,7 +188,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                 if value_base in compatibility_table:
                     value, attr = compatibility_table[value_base]
                     
-                    if (ivs and (K in compatibility) and (IVS_COMP_CLASH in attr)):
+                    if (ivs and (IVS_COMP_CLASH in attr)):
                         converted_value = value_base
                         continue
                     else:
