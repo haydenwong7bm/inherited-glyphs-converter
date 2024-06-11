@@ -18,9 +18,10 @@
  | **Options** | **Usage** | **Default value** |
  |---|---|---|
  | `-c` | A string that contains `j`, `k` or `t`, or `_`.<br>`j`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`k`: Use Korean compatibility ideographs.<br>`t`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement).<br>`_`: Not to use compatibility ideographs. | `jkt` |
- | `-s <value>` | If `value` is `c`: Use only [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If `value` is `*`: Use all characters on supplementary planes.<br>If `value` is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
- | `-n` | Not to convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 峰 → 峯). | |
- | `-v` | Uses commonly-seen variant inherited forms (e.g. 免 → 免). | |
+ | `-s` | If the parameter is `c`: On supplementary planes, only use characters that are in JIS X 0213, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If the parameter is `*`: Use all characters on supplementary planes.<br>If the parameter is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
+ | `-n` | Not to convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 床 → 牀). | |
+ | `-v` | Use inherited variants that are commonly seen but not etymological (e.g. 免 → 免). | |
+ | `-a` | Use inherited variants that are more etymological (e.g. 免 → 免). | |
  | `-i` | Uses IVS conversion. Parameters:<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: Use the [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
  | `-p` | Center align the punctation. | |
  
@@ -33,16 +34,20 @@
  | **Arguments** | **Usage** | **Default value** |
  |---|---|---|
  | `compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
- | `convert_not_unifiable` | If `True`, it will convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 峰 → 峯). | `True` |
- | `supp_planes` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters.<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
+ | `supp_planes` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use characters in JIS X 0213, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf).<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
+ | `convert_not_unifiable` | Convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 床 → 牀). | `True` |
+ | `alternate` | Use inherited variants that are commonly seen but not etymological (e.g. 免 → 免) | `False` |
+ | `academic_correct` | Use inherited variants that are more etymological (e.g. 皆 → 𣅜) | `False` |
  | `ivs` | An (ordered) iterable that contains one or more of the following, or `False`.<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: Use the [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: Use the [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | `False` |
- | `-p` | Choose whether to center align the punctation or not. | `False` |
+ | `-p` | Center align the punctation. | `False` |
+ 
+ # Example
  
 	>>> from inheritedglyphs import *
 	>>> string = '寒來暑往，秋收冬藏。閏餘成歳，律吕調陽。雲騰致雨，露結為霜。金生麗水，玉出崑崗。'
 	>>> print(convert(string))
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
 	>>> print(convert(string, compatibility='j')) # # don't use Korean and CNS compatibility ideographs
-	寒來暑往，秋收冬藏。閏餘成歳，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
-	>>> print(convert(string, compatibility=False, use_ivs=['ad'])) # Only uses Adobe-Japan1 IVS
+	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
+	>>> print(convert(string, compatibility=False, ivs=['ad'])) # Only uses Adobe-Japan1 IVS
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
