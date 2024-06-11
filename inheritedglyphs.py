@@ -77,18 +77,18 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
         else:
             attr = ''
         
-        remove_locale = lambda attr: re.sub('[jkt]', '', attr)
+        remove_locale_tag = lambda attr: re.sub('[jkt]', '', attr)
         
         no_attr = True
         
         if J in attr:
-            J_TABLE[key] = value, remove_locale(attr)
+            J_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
         if K in attr:
-            K_TABLE[key] = value, remove_locale(attr)
+            K_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
         if T in attr:
-            T_TABLE[key] = value, remove_locale(attr)
+            T_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
         
         if no_attr:
