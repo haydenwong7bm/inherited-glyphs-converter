@@ -106,6 +106,9 @@ IVS_MO_TABLE = None # read_ivs_table('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_ivs_table('conversion-tables/ivs-mscs.txt')
 
 def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, tiao_na=True, punctation_align_center=False) -> str:
+    if not ivs and tiao_na:
+        tiao_na = False
+    
     if not supp_planes:
         supp_planes = ''
     
