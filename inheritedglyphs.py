@@ -2,7 +2,7 @@ from collections import defaultdict
 import re
 import unicodedata
 
-__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO']
+__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO', 'MS']
 
 CORE = 'c'
 ALL = '*'
