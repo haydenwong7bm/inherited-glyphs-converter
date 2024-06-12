@@ -18,10 +18,10 @@
  | **Options** | **Usage** | **Default value** |
  |---|---|---|
  | `-c` | A string that contains `j`, `k` or `t`, or `_`.<br>`j`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`k`: Use Korean compatibility ideographs.<br>`t`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement).<br>`_`: Not to use compatibility ideographs. | `jkt` |
- | `-s` | If the parameter is `c`: On supplementary planes, only use characters that are in JIS X 0213, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If the parameter is `*`: Use all characters on supplementary planes.<br>If the parameter is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
+ | `-s` | If the parameter is `c`: For supplementary planes, only use characters that are in Adobe-Japan1, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf) characters on supplementary planes<br>If the parameter is `*`: Use all characters on supplementary planes.<br>If the parameter is `_`: Only use characters from the Basic Multilingual Plane. | `c` |
  | `-n` | Not to convert to inherited variants that are not unifiable on Unicode. (e.g. 秘 → 祕, 床 → 牀). | |
  | `-v` | Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免). | |
- | `-a` | Use inherited variants that are more etymological. (e.g. 免 → 免) | |
+ | `-a` | Use inherited variants that are more etymological. (e.g. 皆 → 𣅜) | |
  | `-i` | Uses IVS conversion. Parameters:<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
  | `-p` | Center align the punctation. | |
  
@@ -34,7 +34,7 @@
  | **Arguments** | **Usage** | **Default value** |
  |---|---|---|
  | `compatibility` | An iterable that contains `'j'`, `'k'`, and/or `'t'`.<br>`'j'`: Use Japanese [compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs).<br>`'k'`: Use Korean compatibility ideographs.<br>`'t'`: Use [CNS 11643 compatibility ideographs](https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement). | `'jkt'` |
- | `supp_planes` | Either be `False`, `'c'`, `'*'`.<br>`c`: in supplementary planes, only use characters in JIS X 0213, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf).<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
+ | `supp_planes` | Either be `False`, `'c'`, `'*'`.<br>`c`: for supplementary planes, only use characters in Adobe-Japan1, HKSCS or [UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf).<br>`'*'`: in supplementary planes, use all characters. | `'c'` |
  | `convert_not_unifiable` | Convert to inherited variants that are not unifiable on Unicode (e.g. 秘 → 祕, 床 → 牀) | `True` |
  | `alternate` | Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免) | `False` |
  | `etymological` | Use inherited variants that are more etymological. (e.g. 皆 → 𣅜) | `False` |
