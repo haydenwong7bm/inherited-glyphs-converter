@@ -7,8 +7,11 @@ from inheritedglyphs import *
 chardet_installed = importlib.util.find_spec("chardet") is not None
 
 if chardet_installed:
-    from chardet.universaldetector import UniversalDetector
-    detector = UniversalDetector()
+    try:
+        from chardet.universaldetector import UniversalDetector
+        detector = UniversalDetector()
+    except:
+        chardet_installed = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument('file', nargs='*')
@@ -20,6 +23,7 @@ parser.add_argument('-a', '--etymological', action='store_true')
 parser.add_argument('-i', '--ivs', nargs='+')
 parser.add_argument('-t', '--tiao_na', action='store_true')
 parser.add_argument('-p', '--punctation', action='store_true')
+parser.add_argument('-u', '--force_utf8', action='store_true')
 
 args = parser.parse_args()
 
@@ -35,7 +39,7 @@ if not args.file:
 for file in args.file:
     filename, file_ext = path.splitext(file)
     
-    if chardet_installed:
+    if chardet_installed and not args.force_utf8:
         with open(file, 'rb') as input_file:
             detector.reset()
             for line in input_file:
