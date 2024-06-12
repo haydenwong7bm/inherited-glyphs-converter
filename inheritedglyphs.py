@@ -16,6 +16,8 @@ IVS_COMP_CLASH = "'"
 ALTERNATE = 'v'
 ETYMOLOGICAL = 'a'
 
+TIAO_NA = '\\'
+
 REVERSE = '<'
 
 NOT_UNIFIABLE = 'n'
@@ -103,7 +105,7 @@ IVS_AD_TABLE = read_ivs_table('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MO_TABLE = None # read_ivs_table('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_ivs_table('conversion-tables/ivs-mscs.txt')
 
-def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, punctation_align_center=False) -> str:
+def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, tiao_na=True, punctation_align_center=False) -> str:
     if not supp_planes:
         supp_planes = ''
     
@@ -162,26 +164,17 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             converted_value = char
             
             dont_replace = False
-            variant_set = None
-            reverse = False
             
             if char in VARIANTS_TABLE:
                 converted_value, attr = VARIANTS_TABLE[char]
                 
                 if NOT_UNIFIABLE in attr:
                     dont_replace = not convert_not_unifiable
-                
-                if ALTERNATE in attr:
-                    variant_set = ALTERNATE
-                elif ETYMOLOGICAL in attr:
-                    variant_set = ETYMOLOGICAL
-                    
-                if REVERSE in attr:
-                    reverse = True
             
-            # compatibility variants/IVS conversion
+            # compatibility variants and IVS conversion
             
             value_base = converted_value
+            attr_base = attr
             converted_ivs = None
             
             for compatibility_table in compatibility_tables_ordered:
@@ -189,33 +182,15 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                     value, attr = compatibility_table[value_base]
                     
                     if (ivs and (IVS_COMP_CLASH in attr)):
-                        converted_value = value_base
+                        attr = attr_base
                         continue
                     else:
-                        if ALTERNATE in attr:
-                            variant_set = ALTERNATE
-                        elif ETYMOLOGICAL in attr:
-                            variant_set = ETYMOLOGICAL
-                        
-                        if REVERSE in attr:
-                            reverse = True
-                        
                         converted_value = value
-                        
                         break
             else:
                 for ivs_table in ivs_tables_ordered:
                     if value_base in ivs_table:
                         converted_ivs, attr = ivs_table[value_base]
-                        
-                        if ALTERNATE in attr:
-                            variant_set = ALTERNATE
-                        elif ETYMOLOGICAL in attr:
-                            variant_set = ETYMOLOGICAL
-                        
-                        if REVERSE in attr:
-                            reverse = True
-                        
                         break
             
             # finalization
@@ -224,15 +199,21 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             if not dont_replace:
                 if alternate:
-                    dont_replace = variant_set == ALTERNATE and reverse
+                    dont_replace = ALTERNATE in attr and reverse
                 else:
-                    dont_replace = variant_set == ALTERNATE and not reverse
+                    dont_replace = ALTERNATE in attr and not reverse
             
             if not dont_replace:
                 if etymological:
-                    dont_replace = variant_set == ETYMOLOGICAL and reverse
+                    dont_replace = ETYMOLOGICAL in attr and reverse
                 else:
-                    dont_replace = variant_set == ETYMOLOGICAL and not reverse
+                    dont_replace = ETYMOLOGICAL in attr and not reverse
+            
+            if not dont_replace:
+                if tiao_na:
+                    dont_replace = TIAO_NA in attr and reverse
+                else:
+                    dont_replace = TIAO_NA in attr and not reverse
             
             if not dont_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
