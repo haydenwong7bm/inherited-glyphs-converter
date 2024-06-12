@@ -1,7 +1,14 @@
 import argparse
+import importlib.util
 import os.path as path
 
 from inheritedglyphs import *
+
+chardet_installed = importlib.util.find_spec("chardet") is not None
+
+if chardet_installed:
+    from chardet.universaldetector import UniversalDetector
+    detector = UniversalDetector()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('file', nargs='*')
@@ -27,8 +34,21 @@ if not args.file:
 
 for file in args.file:
     filename, file_ext = path.splitext(file)
-    with (open(file, 'rt', encoding='utf-8') as input_file,
-        open(f'{filename}-converted{file_ext}', 'wt', encoding='utf-8') as output_file):
+    
+    if chardet_installed:
+        with open(file, 'rb') as input_file:
+            detector.reset()
+            for line in input_file:
+                detector.feed(line)
+                if detector.done:
+                    break
+        
+        encoding = detector.result['encoding']
+    else:
+        encoding = 'utf-8'
+    
+    with (open(file, 'rt', encoding=encoding) as input_file,
+          open(f'{filename}-converted{file_ext}', 'wt', encoding='utf-8') as output_file):
         contents = input_file.read()
         
         converted = convert(contents, \
