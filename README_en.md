@@ -23,7 +23,7 @@
  | `-v` | Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免). | |
  | `-a` | Use inherited variants that are more etymological. (e.g. 皆 → 𣅜) | |
  | `-i` | Uses IVS when conversion. Parameters:<br>`'ad'`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
- | `-t` | Uses IVS with tiāo (㇀) on the nà (㇏) stroke (乀) when conversion. | |
+ | `-t` | Uses IVS with tiāo (㇀) nà (㇏) stroke (乀) when conversion. | |
  | `-p` | Center align the punctation. | |
  
  ### Import module
@@ -40,7 +40,7 @@
  | `alternate` | Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免) | `False` |
  | `etymological` | Use inherited variants that are more etymological. (e.g. 皆 → 𣅜) | `False` |
  | `ivs` | Uses IVS when conversion. The argument value is an (ordered) iterable that contains one or more of the following, or `False`:<br>`'ad'`: [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | `False` |
- | `tiao_na` | Uses IVS with tiāo (㇀) on the nà (㇏) stroke (乀) when conversion. | |
+ | `tiao_na` | Uses IVS with tiāo (㇀) nà (㇏) stroke (乀) when conversion. | |
  | `-p` | Center align the punctation. | `False` |
  
  # Example
