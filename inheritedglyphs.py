@@ -14,7 +14,7 @@ T = 't'
 IVS_COMP_CLASH = "'"
 
 ALTERNATE = 'v'
-ACADEMIC_CORRECT = 'a'
+ETYMOLOGICAL = 'a'
 
 REVERSE = '<'
 
@@ -103,7 +103,7 @@ IVS_AD_TABLE = read_ivs_table('conversion-tables/ivs-adobe-japan1.txt')
 IVS_MO_TABLE = None # read_ivs_table('conversion-tables/ivs-moji-joho.txt')
 IVS_MS_TABLE = read_ivs_table('conversion-tables/ivs-mscs.txt')
 
-def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, academic_correct=False, ivs=False, punctation_align_center=False) -> str:
+def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, punctation_align_center=False) -> str:
     if not supp_planes:
         supp_planes = ''
     
@@ -161,7 +161,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             converted_value = char
             
-            no_replace = False
+            dont_replace = False
             variant_set = None
             reverse = False
             
@@ -169,12 +169,12 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                 converted_value, attr = VARIANTS_TABLE[char]
                 
                 if NOT_UNIFIABLE in attr:
-                    no_replace = not convert_not_unifiable
+                    dont_replace = not convert_not_unifiable
                 
                 if ALTERNATE in attr:
                     variant_set = ALTERNATE
-                elif ACADEMIC_CORRECT in attr:
-                    variant_set = ACADEMIC_CORRECT
+                elif ETYMOLOGICAL in attr:
+                    variant_set = ETYMOLOGICAL
                     
                 if REVERSE in attr:
                     reverse = True
@@ -194,8 +194,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                     else:
                         if ALTERNATE in attr:
                             variant_set = ALTERNATE
-                        elif ACADEMIC_CORRECT in attr:
-                            variant_set = ACADEMIC_CORRECT
+                        elif ETYMOLOGICAL in attr:
+                            variant_set = ETYMOLOGICAL
                         
                         if REVERSE in attr:
                             reverse = True
@@ -210,8 +210,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                         
                         if ALTERNATE in attr:
                             variant_set = ALTERNATE
-                        elif ACADEMIC_CORRECT in attr:
-                            variant_set = ACADEMIC_CORRECT
+                        elif ETYMOLOGICAL in attr:
+                            variant_set = ETYMOLOGICAL
                         
                         if REVERSE in attr:
                             reverse = True
@@ -220,28 +220,27 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             # finalization
             
-            char_cache.add(char)
-            char_cache.add(converted_value)
+            char_cache.update({char, converted_value})
             
-            if not no_replace:
+            if not dont_replace:
                 if alternate:
-                    no_replace = variant_set == ALTERNATE and reverse
+                    dont_replace = variant_set == ALTERNATE and reverse
                 else:
-                    no_replace = variant_set == ALTERNATE and not reverse
+                    dont_replace = variant_set == ALTERNATE and not reverse
             
-            if not no_replace:
-                if academic_correct:
-                    no_replace = variant_set == ACADEMIC_CORRECT and reverse
+            if not dont_replace:
+                if etymological:
+                    dont_replace = variant_set == ETYMOLOGICAL and reverse
                 else:
-                    no_replace = variant_set == ACADEMIC_CORRECT and not reverse
+                    dont_replace = variant_set == ETYMOLOGICAL and not reverse
             
-            if not no_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
+            if not dont_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
-                    no_replace = not (converted_value in SUPP_CORE_LIST)
+                    dont_replace = not (converted_value in SUPP_CORE_LIST)
                 else:
-                    no_replace = not bool(supp_planes)
+                    dont_replace = not bool(supp_planes)
             
-            if not no_replace and converted_ivs:
+            if not dont_replace and converted_ivs:
                 converted_value = converted_ivs
             
             # centralize punctation symbols
@@ -250,7 +249,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                 converted_value = f'{char}\ufe01'
                 replace = True
             
-            if char != converted_value and not no_replace:
+            if char != converted_value and not dont_replace:
                 returned = returned.replace(char, converted_value)
     
     return returned
