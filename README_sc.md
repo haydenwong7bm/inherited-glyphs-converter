@@ -37,7 +37,7 @@
  | `supp_planes` | 参数値可为`False`、`'c'`、或`'*'`。<br>`c`：于辅助平󠄁面中，只选用已包󠄁括于JIS X 0213、HKSCS或[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)的字符。<br>`*`：于辅助平󠄁面中，使󠄁用所󠄁有字符。 | `'c'` |
  | `convert_not_unifiable` | 如设为`True`，将转換Unicode不能统一的󠄁字。（例如：秘 → 祕、床 → 牀） | `True` |
  | `alternate` | 选用不符合字理唯常見的󠄁异體写法。（例如：免 → 免） | `False` |
- | `academic_correct` | 选用更󠄁符合字理的󠄁异体写法。（例如：皆 → 𣅜） | `False` |
+ | `etymological` | 选用更󠄁符合字理的󠄁异体写法。（例如：皆 → 𣅜） | `False` |
  | `ivs` | 参数値为含有以下字符串的󠄁可迭󠄁代对象或`False`。<br>`'ad'`：使󠄁用[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：使󠄁用[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：使󠄁用[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | `False` |
  | `punctation_align_center` | 把标点符号置中。 | `False` |
  
