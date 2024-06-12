@@ -24,7 +24,8 @@
  | `-a` | 使󠄁用更󠄁符合字理的󠄁異體傳承字形寫法。（例如：皆 → 𣅜） | |
  | `-i` | 使󠄁用異體字選󠄁擇器序列轉換。參數列表：<br>`'ad'`：[Adobe-Japan1異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳門增補字符集異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
  | `-t` | 使󠄁用含有飾󠄁筆捺的󠄁異體字選󠄁擇器序列轉換。 | |
- | `-p` | 把標點符號置中。 | `False` |
+ | `-p` | 把標點符號置中。 | |
+ | `-u` | 強迫󠄁UTF-8編󠄁碼。 | |
  
  ### 導󠄁入模組
  

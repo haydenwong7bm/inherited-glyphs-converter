@@ -25,6 +25,7 @@
  | `-i` | 使󠄁用异体字选择器串行转換。参数列表：<br>`'ad'`：[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
  | `-t` | 使󠄁用含有饰笔捺的󠄁异体字选择器串行转換。 | |
  | `-p` | 把标点符号置中。 | |
+ | `-u` | 强迫󠄁UTF-8编码。 | |
  
  ### 导入模组
  
