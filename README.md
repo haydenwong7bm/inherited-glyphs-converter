@@ -23,6 +23,7 @@
  | `-v` | 使󠄁用不符合字理唯常見的󠄁異體傳承字形寫法。（例如：免 → 免） | |
  | `-a` | 使󠄁用更󠄁符合字理的󠄁異體傳承字形寫法。（例如：皆 → 𣅜） | |
  | `-i` | 使󠄁用異體字選󠄁擇器序列轉換。參數列表：<br>`'ad'`：[Adobe-Japan1異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳門增補字符集異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
+ | `-t` | 使󠄁用含有飾󠄁筆捺的󠄁異體字選󠄁擇器序列轉換。 | |
  | `-p` | 把標點符號置中。 | `False` |
  
  ### 導󠄁入模組
@@ -38,7 +39,8 @@
  | `convert_not_unifiable` | 轉換Unicode不能統一的󠄁字。（例如：秘 → 祕、床 → 牀） | `True` |
  | `alternate` | 使󠄁用不符合字理唯常見的󠄁異體傳承字形寫法。（例如：免 → 免） | `False` |
  | `etymological` | 使󠄁用更󠄁符合字理的󠄁異體傳承字形寫法。（例如：皆 → 𣅜） | `False` |
- | `ivs` | 參數値爲含有以下字串的󠄁可迭󠄁代物件或`False`。<br>`'ad'`：[Adobe-Japan1異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳門增補字符集異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | `False` |
+ | `ivs` | 使󠄁用異體字選󠄁擇器序列轉換。參數値爲含有以下字串的󠄁可迭󠄁代物件或`False`：<br>`'ad'`：[Adobe-Japan1異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳門增補字符集異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | `False` |
+ | `tiao_na` | 使󠄁用含有飾󠄁筆捺的󠄁異體字選󠄁擇器序列轉換。 | `True` |
  | `punctation_align_center` | 把標點符號置中。 | `False` |
  
  ### 使󠄁用例子

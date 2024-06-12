@@ -23,6 +23,7 @@
  | `-v` | 使󠄁用不符合字理唯常见的󠄁异体写法。（例如：免 → 免） | |
  | `-a` | 使󠄁用更󠄁符合字理的󠄁异体写法。（例如：皆 → 𣅜） | |
  | `-i` | 使󠄁用异体字选择器串行转換。参数列表：<br>`'ad'`：[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
+ | `-t` | 使󠄁用含有饰笔捺的󠄁异体字选择器串行转換。 | |
  | `-p` | 把标点符号置中。 | |
  
  ### 导入模组
@@ -38,7 +39,8 @@
  | `convert_not_unifiable` | 如设为`True`，将转換Unicode不能统一的󠄁字。（例如：秘 → 祕、床 → 牀） | `True` |
  | `alternate` | 使󠄁用不符合字理唯常見的󠄁异體写法。（例如：免 → 免） | `False` |
  | `etymological` | 使󠄁用更󠄁符合字理的󠄁异体写法。（例如：皆 → 𣅜） | `False` |
- | `ivs` | 参数値为含有以下字符串的󠄁可迭󠄁代对象或`False`。<br>`'ad'`：使󠄁用[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：使󠄁用[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：使󠄁用[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | `False` |
+ | `ivs` | 使󠄁用异体字选择器串行转換。参数値为含有以下字符串的󠄁可迭󠄁代对象或`False`：<br>`'ad'`：使󠄁用[Adobe-Japan1异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`'mo'`：使󠄁用[Moji-Joho异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`'ms'`：使󠄁用[澳门增补字符集异体字选择器串行](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | `False` |
+ | `tiao_na` | 使󠄁用含有饰笔捺的󠄁异体字选择器串行转換。 | `True` |
  | `punctation_align_center` | 把标点符号置中。 | `False` |
  
  ### 使󠄁用例子
