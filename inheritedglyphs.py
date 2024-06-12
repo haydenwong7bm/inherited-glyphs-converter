@@ -162,6 +162,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             # initial conversion
             
             converted_value = char
+            attr = ''
             
             dont_replace = False
             
@@ -197,24 +198,14 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
             
             char_cache.update({char, converted_value})
             
-            if not dont_replace:
-                if alternate:
-                    dont_replace = ALTERNATE in attr and reverse
+            for option, variant_set in [(alternate, ALTERNATE), (etymological, ETYMOLOGICAL), (tiao_na, TIAO_NA)]:
+                if dont_replace:
+                    break
+                elif option:
+                    dont_replace = variant_set in attr and REVERSE in attr
                 else:
-                    dont_replace = ALTERNATE in attr and not reverse
-            
-            if not dont_replace:
-                if etymological:
-                    dont_replace = ETYMOLOGICAL in attr and reverse
-                else:
-                    dont_replace = ETYMOLOGICAL in attr and not reverse
-            
-            if not dont_replace:
-                if tiao_na:
-                    dont_replace = TIAO_NA in attr and reverse
-                else:
-                    dont_replace = TIAO_NA in attr and not reverse
-            
+                    dont_replace = variant_set in attr and REVERSE not in attr
+                        
             if not dont_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
                 if supp_planes == CORE:
                     dont_replace = not (converted_value in SUPP_CORE_LIST)
