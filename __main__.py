@@ -51,18 +51,22 @@ for file in args.file:
     else:
         encoding = 'utf-8'
     
-    with (open(file, 'rt', encoding=encoding) as input_file,
-          open(f'{filename}-converted{file_ext}', 'wt', encoding='utf-8') as output_file):
-        contents = input_file.read()
-        
-        converted = convert(contents, \
-        supp_planes=args.supp, \
-        compatibility=args.compatibility, \
-        convert_not_unifiable=args.convert_not_unifiable, \
-        alternate=args.alternate, \
-        etymological=args.etymological, \
-        ivs=args.ivs, \
-        tiao_na=args.tiao_na, \
-        punctation_align_center=args.punctation)
-        
+    try:
+        with open(file, 'rt', encoding=encoding) as input_file:
+            contents = input_file.read()
+    except UnicodeDecodeError:
+        with open(file, 'rt', encoding='utf-8') as input_file:
+            contents = input_file.read()
+    
+    converted = convert(contents, \
+                    supp_planes=args.supp, \
+                    compatibility=args.compatibility, \
+                    convert_not_unifiable=args.convert_not_unifiable, \
+                    alternate=args.alternate, \
+                    etymological=args.etymological, \
+                    ivs=args.ivs, \
+                    tiao_na=args.tiao_na, \
+                    punctation_align_center=args.punctation)
+    
+    with open(f'{filename}-converted{file_ext}', 'wt', encoding='utf-8') as output_file:    
         output_file.write(converted)
