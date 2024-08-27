@@ -23,7 +23,7 @@ parser.add_argument('-a', '--etymological', action='store_true')
 parser.add_argument('-i', '--ivs', nargs='+')
 parser.add_argument('-t', '--tiao_na', action='store_true')
 parser.add_argument('-p', '--punctation', action='store_true')
-parser.add_argument('-u', '--force_utf8', action='store_true')
+parser.add_argument('-u', '--force_encoding', nargs='?', const='utf-8')
 
 args = parser.parse_args()
 
@@ -39,7 +39,7 @@ if not args.file:
 for file in args.file:
     filename, file_ext = path.splitext(file)
     
-    if chardet_installed and not args.force_utf8:
+    if chardet_installed and args.force_encoding is None:
         with open(file, 'rb') as input_file:
             detector.reset()
             for line in input_file:
@@ -49,7 +49,7 @@ for file in args.file:
         
         encoding = detector.result['encoding']
     else:
-        encoding = 'utf-8'
+        encoding = 'utf-8' if args.force_encoding is None else args.force_encoding
     
     try:
         with open(file, 'rt', encoding=encoding) as input_file:
