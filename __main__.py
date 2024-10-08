@@ -14,7 +14,7 @@ if chardet_installed:
         chardet_installed = False
 
 parser = argparse.ArgumentParser()
-parser.add_argument('file', nargs='*')
+parser.add_argument('file', nargs='+')
 parser.add_argument('-c', '--compatibility', default='jkt')
 parser.add_argument('-s', '--supp', default='c')
 parser.add_argument('-n', '--convert_not_unifiable', action='store_false')
@@ -32,9 +32,6 @@ if args.compatibility == '_':
 
 if args.supp == '_':
     args.supp = False
-
-if not args.file:
-    raise ValueError('file is missing')
 
 for file in args.file:
     filename, file_ext = path.splitext(file)
