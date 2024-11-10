@@ -14,16 +14,16 @@ if chardet_installed:
         chardet_installed = False
 
 parser = argparse.ArgumentParser()
-parser.add_argument('file', nargs='+')
-parser.add_argument('-c', '--compatibility', default='jkt')
-parser.add_argument('-s', '--supp', default='c')
-parser.add_argument('-n', '--convert_not_unifiable', action='store_false')
-parser.add_argument('-v', '--alternate', action='store_true')
-parser.add_argument('-a', '--etymological', action='store_true')
-parser.add_argument('-i', '--ivs', nargs='+')
-parser.add_argument('-t', '--tiao_na', action='store_true')
-parser.add_argument('-p', '--punctation', action='store_true')
-parser.add_argument('-u', '--force_encoding', nargs='?', const='utf-8')
+parser.add_argument('file', nargs='+', help='list of source files')
+parser.add_argument('-c', '--compatibility', default='jkt', help='use compatibility ideographs')
+parser.add_argument('-s', '--supp', default='c', help='Use of supplementary planes characters settings')
+parser.add_argument('-n', '--convert_not_unifiable', action='store_false', help='Not to convert to inherited variants that are not unifiable on Unicode')
+parser.add_argument('-v', '--alternate', action='store_true', help='Use inherited variants that are commonly seen but not etymological')
+parser.add_argument('-a', '--etymological', action='store_true', help='Use inherited variants that are more etymological')
+parser.add_argument('-i', '--ivs', nargs='+', help='Uses IVS when conversion.')
+parser.add_argument('-t', '--tiao_na', action='store_true', help='Uses IVSes with tiāo (㇀) nà (㇏) stroke (乀) when conversion')
+parser.add_argument('-p', '--punctation', action='store_true', help='Center align the punctation')
+parser.add_argument('-u', '--force_encoding', nargs='?', const='utf-8', help='Specifies text encoding for decoding')
 
 args = parser.parse_args()
 
