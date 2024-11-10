@@ -25,7 +25,7 @@
  | `-i` | Uses IVS when conversion. Parameters:<br>`ad`: Use the [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`mo`: [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`ms`: [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | |
  | `-t` | Uses IVS with tiāo (㇀) nà (㇏) stroke (乀) when conversion. | |
  | `-p` | Center align the punctation. | |
- | `-u` | Force specified encoding. | utf-8 |
+ | `-u` | Specifies text encoding for decoding. | utf-8 |
  
  ### Import module
  

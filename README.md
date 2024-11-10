@@ -11,7 +11,7 @@
  
  ### 命令列
  
-	python . <檔案名稱󠄁>
+	python . <文󠄁字檔案名稱󠄁>
  
  命令列選󠄁項：
  
@@ -25,7 +25,7 @@
  | `-i` | 使󠄁用異體字選󠄁擇器序列轉換。參數列表：<br>`ad`：[Adobe-Japan1異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf)。<br>~~`mo`：[Moji-Joho異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf)。~~<br>`ms`：[澳門增補字符集異體字選󠄁擇器序列](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_MSARG.pdf)。 | |
  | `-t` | 使󠄁用含有飾󠄁筆捺的󠄁異體字選󠄁擇器序列轉換。 | |
  | `-p` | 把標點符號置中。 | |
- | `-u` | 強迫󠄁使󠄁用指定的󠄁編󠄁碼。 | utf-8 |
+ | `-u` | 指定字符編󠄁碼解碼。 | utf-8 |
  
  ### 導󠄁入模組
  
