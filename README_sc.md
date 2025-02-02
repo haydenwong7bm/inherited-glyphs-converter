@@ -3,7 +3,7 @@
 * [网上版已推出，请点击我！](https://haydenwong7bm.github.io/inherited-glyphs-converter/zh-sc/)
 
 # 传承字形转換器
- 转換汉字至[传承字形](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2)（大致根据[《传承字形检校󠄁表》](https://github.com/ichitenfont/inheritedglyphs)标准），消󠄁除[新字形](https://zh.wikipedia.org/wiki/%E6%96%B0%E5%AD%97%E5%BD%A2)、[香港󠄁](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E5%AD%97%E5%AD%97%E5%BD%A2%E8%A1%A8)及󠄁[台湾](https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94)标准异体字，及󠄁于Unicode[可统一但被分󠄁开编码](https://gitee.com/eisoch/irg/issues/I5FR1Q)的󠄁汉字。
+ 转換汉字至[传承字形](https://zh.wikipedia.org/wiki/%E8%88%8A%E5%AD%97%E5%BD%A2)（大致根据[《传承字形检校󠄁表》](https://github.com/ichitenfont/inheritedglyphs)标准），消󠄁除[新字形](https://zh.wikipedia.org/wiki/%E6%96%B0%E5%AD%97%E5%BD%A2)、[香港󠄁](https://zh.wikipedia.org/wiki/%E5%B8%B8%E7%94%A8%E5%AD%97%E5%AD%97%E5%BD%A2%E8%A1%A8)及󠄁[台湾](https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AD%97%E6%A8%99%E6%BA%96%E5%AD%97%E9%AB%94)地区标准字形，及󠄁于Unicode[可统一但被分󠄁开编码](https://gitee.com/eisoch/irg/issues/I5FR1Q)的󠄁汉字。
  
  此转換器会尽量保留[新字体](https://zh.wikipedia.org/wiki/%E6%96%B0%E5%AD%97%E4%BD%93)及󠄁[简化󠄁字](https://zh.wikipedia.org/wiki/%E7%AE%80%E5%8C%96%E5%AD%97)。
  
@@ -11,14 +11,14 @@
  
  ### 命令行
  
-	python . <文󠄁字档案名称>
+	python . <文󠄁本文󠄁件名称>
  
  命令行选项：
  
  | **选项** | **功能** | **预设値** |
  |---|---|---|
- | `-c` | 一个含有`'j'`、`'k'`及󠄁／或`'t'`的󠄁字符串，或者`_`。<br>`j`：使󠄁用日本[兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使󠄁用韩国兼󠄁容表意󠄁文󠄁字。<br>`t`：使󠄁用[CNS 11643兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。<br>`_`：不使󠄁用兼󠄁容表意󠄁文󠄁字。 | `jkt` |
- | `-s` | 使󠄁用辅助平󠄁面字符設定，参数値如下：<br>`c`：只使󠄁用已包󠄁括於Adobe-Japan1、HKSCS或[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)的󠄁字符。<br>`*`：使󠄁用所󠄁有字符。<br>`_`：只使󠄁用基本平󠄁面字符。 | `c` |
+ | `-c` | 一个含有`'j'`、`'k'`及󠄁／或`'t'`的󠄁字符串，或者`_`。<br>`j`：使󠄁用日本[兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97)。<br>`k`：使󠄁用韩国兼󠄁容表意󠄁文󠄁字。<br>`t`：使󠄁用[CNS 11643兼󠄁容表意󠄁文󠄁字](https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%9B%B8%E5%AE%B9%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%85%E5%8D%80)。<br>`_`：不使󠄁用兼󠄁容表意󠄁文󠄁字。 | jkt |
+ | `-s` | 使󠄁用辅助平󠄁面字符設定，参数値如下：<br>`c`：只使󠄁用已包󠄁括於Adobe-Japan1、HKSCS或[UnihanCore2020](https://www.unicode.org/L2/L2019/19388-unihan-core-2020.pdf)的󠄁字符。<br>`*`：使󠄁用所󠄁有字符。<br>`_`：只使󠄁用基本平󠄁面字符。 | c |
  | `-n` | 不转換Unicode不能统一的󠄁字。（例如：秘 → 祕、床 → 牀） | |
  | `-v` | 使󠄁用不符合字理唯常见的󠄁异体写法。（例如：免 → 免） | |
  | `-a` | 使󠄁用更󠄁符合字理的󠄁异体写法。（例如：皆 → 𣅜） | |
