@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inheritedglyphs"
+version = "1.13"
+description = ""
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "GPL-3.0"}
+authors = [
+  {name = "Hayden Wong", email = "haydkenmutthew@gmail.com"}
+]
+keywords = ["inheritedglyphs"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GPL-3.0 License",
+  "Operating System :: OS Independent"
+]
+
+[project.optional-dependencies]
+chardet = ["chardet"]
+
+[project.urls]
+Homepage = "https://github.com/haydenwong7bm/inherited-glyphs-converter"
+Documentation = "https://github.com/haydenwong7bm/inherited-glyphs-converter"
+Source = "https://github.com/haydenwong7bm/inherited-glyphs-converter"
+Tracker = "https://github.com/haydenwong7bm/inherited-glyphs-converter/issues"
