@@ -1,6 +1,9 @@
 from collections import defaultdict
 import re
 import unicodedata
+import os
+
+MODULE_DIR = os.path.dirname(__file__)
 
 __all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO', 'MS']
 
@@ -28,10 +31,10 @@ MS = 'ms'
 
 CENTERABLE_PUNCTATION = '、。！，．：；？'
 
-def read_tsv(path):
+def read_tsv(filename):
     returned = {}
     
-    with open(path, 'rt', encoding='utf-8') as file:
+    with open(filename, 'rt', encoding='utf-8') as file:
         for line in file:
             key_value = line.rstrip('\n').split('\t')
             
@@ -42,10 +45,10 @@ def read_tsv(path):
     
     return returned
 
-def read_ivs_table(path):
+def read_ivs_table(filename):
     returned = {}
     
-    with open(path, 'rt', encoding='utf-8') as file:
+    with open(filename, 'rt', encoding='utf-8') as file:
         for line in file:
             key_value = line.rstrip('\n').split('\t')
             
@@ -61,7 +64,7 @@ def is_cjk(char):
     ord_ = ord(char)
     return (0x3400 <= ord_ <= 0x4dbf) or (0x4e00 <= ord_ <= 0x9fff) or (0xf900 <= ord_ <= 0xfaff) or (0x20000 <= ord_ <= 0x323af)
 
-with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file:
+with open(os.path.join(MODULE_DIR, 'conversion-tables/variants_list.txt'), 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = {}
     J_TABLE = {}
     K_TABLE = {}
@@ -99,11 +102,11 @@ with open('conversion-tables/variants_list.txt', 'rt', encoding='utf-8') as file
         if CORE in attr:
             SUPP_CORE_LIST.add(value)
 
-COMPATIBILITY_CORRECTED_MAPPING = read_tsv('conversion-tables/compatibility_corrected_mapping.txt')
+COMPATIBILITY_CORRECTED_MAPPING = read_tsv(os.path.join(MODULE_DIR, 'conversion-tables/compatibility_corrected_mapping.txt'))
 
-IVS_AD_TABLE = read_ivs_table('conversion-tables/ivs-adobe-japan1.txt')
-IVS_MO_TABLE = None # read_ivs_table('conversion-tables/ivs-moji-joho.txt')
-IVS_MS_TABLE = read_ivs_table('conversion-tables/ivs-mscs.txt')
+IVS_AD_TABLE = read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-adobe-japan1.txt'))
+IVS_MO_TABLE = None # read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-moji-joho.txt'))
+IVS_MS_TABLE = read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-mscs.txt'))
 
 def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, tiao_na=True, punctation_align_center=False) -> str:
     if not ivs and tiao_na:
