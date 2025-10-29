@@ -68,3 +68,6 @@ def main():
         
         with open(f'{filename}-converted{file_ext}', 'wt', encoding='utf-8') as output_file:    
             output_file.write(converted)
+
+if __name__ == '__main__':
+    main()

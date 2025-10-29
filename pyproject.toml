@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 [project.scripts]
-inheritedglyphs = "inheritedglyphs.cli:main"
+inheritedglyphs = "inheritedglyphs.__main__:main"
 
 [project.optional-dependencies]
 chardet = ["chardet"]
