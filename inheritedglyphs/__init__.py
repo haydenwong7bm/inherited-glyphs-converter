@@ -1,1 +1,1 @@
-from inheritedglyphs import *
+from .inheritedglyphs import *
