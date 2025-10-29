@@ -1,0 +1,7 @@
+include README.md
+include README_en.md
+include README_sc.md
+include LICENSE
+recursive-include inheritedglyphs/conversion-tables *
+recursive-exclude scripts *
+recursive-exclude test *
