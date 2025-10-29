@@ -2,3 +2,8 @@
 *.pyc
 test
 scripts
+
+build/
+dist/
+*.egg-info/
+*.egg
