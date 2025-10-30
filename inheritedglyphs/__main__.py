@@ -23,9 +23,9 @@ def main():
     parser.add_argument('-v', '--alternate', action='store_true', help='Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免)')
     parser.add_argument('-a', '--etymological', action='store_true', help='Use inherited variants that are more etymological. (e.g. 皆 → 𣅜)')
     parser.add_argument('-i', '--ivs', nargs='+', help='Uses IVS when conversion.')
-    parser.add_argument('-t', '--tiao_na', action='store_true', help='Uses IVSes with tiāo nà stroke (乀)')
-    parser.add_argument('-p', '--punctation', action='store_true', help='Center align the punctation')
-    parser.add_argument('-u', '--encoding', nargs='?', default='utf-8', help='Specifies text encoding for decoding (default: UTF-8)')
+    parser.add_argument('-t', '--tiao_na', action='store_true', help='Uses IVSes with decorative tiāo nà stroke.')
+    parser.add_argument('-p', '--punctation', action='store_true', help='Center align the punctation.')
+    parser.add_argument('-u', '--encoding', nargs='?', const='utf-8', help='Specifies text encoding for decoding. (default: UTF-8)')
     
     args = parser.parse_args()
     
