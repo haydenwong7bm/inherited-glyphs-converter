@@ -118,9 +118,6 @@ def convert(string: str, *, supp_planes=SUPP_PLANES_CORE, compatibility=[COMPAT_
     if supp_planes not in {'', SUPP_PLANES_CORE, SUPP_PLANES_ALL}:
         raise TypeError
     
-    if isinstance(compatibility, str):
-        compatibility = [compatibility]
-        
     if isinstance(ivs, str):
         ivs = [ivs]
     
