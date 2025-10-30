@@ -53,7 +53,7 @@
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
 	>>> print(convert(string, compatibility='j')) # 不使󠄁用韓󠄁國及󠄁CNS相容表意󠄁文󠄁字
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
-	>>> print(convert(string, compatibility=False, ivs=['ad'])) # 只使用Adobe-Japan1異體字選󠄁擇器
+	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # 只使用Adobe-Japan1異體字選󠄁擇器
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
  ### 下載及󠄁安裝
@@ -61,10 +61,12 @@
  該模組需要Python 3.7或更󠄁高版本。
  
  如使用pip安裝最新版本，只需執行：
+ ```
+ pip install inheritedglyphs
+ ```
  
- ```pip install inheritedglyphs```
-	
  或於主目錄：
- 
- ```pip install .```
+ ```
+ pip install .
+ ```
  

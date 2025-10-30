@@ -53,7 +53,7 @@
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
 	>>> print(convert(string, compatibility='j')) # # don't use Korean and CNS compatibility ideographs
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
-	>>> print(convert(string, compatibility=False, ivs=['ad'])) # Only uses Adobe-Japan1 IVS
+	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # Only uses Adobe-Japan1 IVS
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
  ### Download & installation
@@ -61,10 +61,12 @@
  The module requires Python 3.7 or up.
  
  To install latest release with pip, simply run
- 
- ```pip install inheritedglyphs```
+ ```
+ pip install inheritedglyphs
+ ```
  
  or from the source tree
- 
- ```pip install .```
+ ```
+ pip install .
+ ```
  
