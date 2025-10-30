@@ -42,7 +42,7 @@
  | `alternate` | Use inherited variants that are commonly seen but not etymological. (e.g. 免 → 免) | `False` |
  | `etymological` | Use inherited variants that are more etymological. (e.g. 皆 → 𣅜) | `False` |
  | `ivs` | Uses IVSes in the conversion. The argument value is an (ordered) iterable that contains one or more of the following, or `False`:<br>`'ad'`: [Adobe-Japan1 IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Adobe-Japan1.pdf).<br>~~`'mo'`: [Moji-Joho IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf).~~<br>`'ms'`: [Macao Supplementary Character Set IVS](https://unicode.org/ivd/data/2022-09-13/IVD_Charts_Moji_Joho.pdf). | `False` |
- | `tiao_na` | Uses IVSes with tiāo (㇀) nà (㇏) stroke (乀) in the conversion. | |
+ | `tiao_na` | Uses IVSes with decorative tiāo nà stroke in the conversion. | |
  | `-p` | Center align the punctation. | `False` |
  
  ### Example
@@ -56,11 +56,11 @@
 	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # Only uses Adobe-Japan1 IVS
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
- ### Download & installation
+ ### Download & Installation
  
  The module requires Python 3.7 or up.
  
- To install latest release with pip, simply run
+ The module is available on PyPI (https://pypi.org/project/inheritedglyphs). To install the latest release with pip, simply run
  ```
  pip install inheritedglyphs
  ```

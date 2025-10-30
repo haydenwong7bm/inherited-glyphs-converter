@@ -60,12 +60,12 @@
 
  該模組需要Python 3.7或更󠄁高版本。
  
- 如使用pip安裝最新版本，只需執行：
+ 該模組已發佈在PyPI上。（https://pypi.org/project/inheritedglyphs）。如使用pip安裝最新版本，只需執行：
  ```
  pip install inheritedglyphs
  ```
  
- 或於主目錄：
+ 或於源碼主目錄：
  ```
  pip install .
  ```
