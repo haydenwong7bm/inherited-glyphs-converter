@@ -5,14 +5,14 @@ import os
 
 MODULE_DIR = os.path.dirname(__file__)
 
-__all__ = ['convert', 'CORE', 'ALL', 'J', 'K', 'T', 'NOT_UNIFIABLE', 'AD', 'MO', 'MS']
+__all__ = ['convert', 'SUPP_PLANES_CORE', 'SUPP_PLANES_ALL', 'COMPAT_J', 'COMPAT_K', 'COMPAT_T', 'NOT_UNIFIABLE', 'IVS_AD', 'IVS_MS'] #, 'IVS_MO']
 
-CORE = 'c'
-ALL = '*'
+SUPP_PLANES_CORE = 'c'
+SUPP_PLANES_ALL = '*'
 
-J = 'j'
-K = 'k'
-T = 't'
+COMPAT_J = 'j'
+COMPAT_K = 'k'
+COMPAT_T = 't'
 
 IVS_COMP_CLASH = "'"
 
@@ -25,9 +25,9 @@ REVERSE = '<'
 
 NOT_UNIFIABLE = 'n'
 
-AD = 'ad'
-MO = 'mo'
-MS = 'ms'
+IVS_AD = 'ad'
+IVS_MO = 'mo'
+IVS_MS = 'ms'
 
 CENTERABLE_PUNCTATION = '、。！，．：；？'
 
@@ -66,11 +66,11 @@ def is_cjk(char):
 
 with open(os.path.join(MODULE_DIR, 'conversion-tables/variants_list.txt'), 'rt', encoding='utf-8') as file:
     VARIANTS_TABLE = {}
-    J_TABLE = {}
-    K_TABLE = {}
-    T_TABLE = {}
+    COMPAT_J_TABLE = {}
+    COMPAT_K_TABLE = {}
+    COMPAT_T_TABLE = {}
     
-    SUPP_CORE_LIST = set()
+    SUPP_CHARSET_CORE_LIST = set()
     
     for line in file:
         key_value = line.rstrip('\n').split('\t')
@@ -86,21 +86,21 @@ with open(os.path.join(MODULE_DIR, 'conversion-tables/variants_list.txt'), 'rt',
         
         no_attr = True
         
-        if J in attr:
-            J_TABLE[key] = value, remove_locale_tag(attr)
+        if COMPAT_J in attr:
+            COMPAT_J_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
-        if K in attr:
-            K_TABLE[key] = value, remove_locale_tag(attr)
+        if COMPAT_K in attr:
+            COMPAT_K_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
-        if T in attr:
-            T_TABLE[key] = value, remove_locale_tag(attr)
+        if COMPAT_T in attr:
+            COMPAT_T_TABLE[key] = value, remove_locale_tag(attr)
             no_attr = False
         
         if no_attr:
             VARIANTS_TABLE[key] = value, attr
             
-        if CORE in attr:
-            SUPP_CORE_LIST.add(value)
+        if SUPP_PLANES_CORE in attr:
+            SUPP_CHARSET_CORE_LIST.add(value)
 
 COMPATIBILITY_CORRECTED_MAPPING = read_tsv(os.path.join(MODULE_DIR, 'conversion-tables/compatibility_corrected_mapping.txt'))
 
@@ -108,18 +108,24 @@ IVS_AD_TABLE = read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-ad
 IVS_MO_TABLE = None # read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-moji-joho.txt'))
 IVS_MS_TABLE = read_ivs_table(os.path.join(MODULE_DIR, 'conversion-tables/ivs-mscs.txt'))
 
-def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, tiao_na=True, punctation_align_center=False) -> str:
+def convert(string: str, *, supp_planes=SUPP_PLANES_CORE, compatibility=[COMPAT_J, COMPAT_K, COMPAT_T], convert_not_unifiable=True, alternate=False, etymological=False, ivs=False, tiao_na=True, punctation_align_center=False) -> str:
     if not ivs and tiao_na:
         tiao_na = False
     
     if not supp_planes:
         supp_planes = ''
     
-    if supp_planes not in {'', CORE, ALL}:
+    if supp_planes not in {'', SUPP_PLANES_CORE, SUPP_PLANES_ALL}:
         raise TypeError
     
+    if isinstance(compatibility, str):
+        compatibility = [compatibility]
+        
+    if isinstance(ivs, str):
+        ivs = [ivs]
+    
     if compatibility:
-        map_ = lambda x: {J: J_TABLE, K: K_TABLE, T: T_TABLE}[x]
+        map_ = lambda x: {COMPAT_J: COMPAT_J_TABLE, COMPAT_K: COMPAT_K_TABLE, COMPAT_T: COMPAT_T_TABLE}[x]
         compatibility_tables_ordered = [map_(i) for i in compatibility]
     else:
         compatibility_tables_ordered = []
@@ -129,7 +135,7 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
         if 'mo' in ivs:
             raise NotImplementedError('Moji-Joho IVS conversion is temporarily removed due to inadequate conversion table')
             
-        map_ = lambda x: {AD: IVS_AD_TABLE, MO: IVS_MO_TABLE, MS: IVS_MS_TABLE}[x]
+        map_ = lambda x: {IVS_AD: IVS_AD_TABLE, IVS_MO: IVS_MO_TABLE, IVS_MS: IVS_MS_TABLE}[x]
         ivs_tables_ordered = [map_(i) for i in ivs]
     else:
         ivs_tables_ordered = []
@@ -213,8 +219,8 @@ def convert(string: str, *, supp_planes=CORE, compatibility=[J, K, T], convert_n
                     dont_replace = variant_set in attr and REVERSE not in attr
                         
             if not dont_replace and ord(char) <= 0xffff and ord(converted_value) > 0xffff:
-                if supp_planes == CORE:
-                    dont_replace = not (converted_value in SUPP_CORE_LIST)
+                if supp_planes == SUPP_PLANES_CORE:
+                    dont_replace = not (converted_value in SUPP_CHARSET_CORE_LIST)
                 else:
                     dont_replace = not bool(supp_planes)
             
