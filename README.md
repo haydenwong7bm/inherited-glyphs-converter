@@ -61,7 +61,10 @@
  The module requires Python 3.7 or up.
  
  To install latest release with pip, simply run
-	pip install inheritedglyphs
+ 
+ ```pip install inheritedglyphs```
+ 
  or from the source tree
-	pip install .
+ 
+ ```pip install .```
  

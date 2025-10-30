@@ -60,7 +60,10 @@
  该模组需要Python 3.7或更󠄁高版本。
  
  如使用pip安装最新版本，只需执行：
-	pip install inheritedglyphs
+ 
+ ```pip install inheritedglyphs```
+ 
  或于源码主目彔：
-	pip install .
+ 
+ ```pip install .```
  
