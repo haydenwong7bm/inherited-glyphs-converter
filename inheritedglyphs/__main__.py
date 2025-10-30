@@ -35,10 +35,12 @@ def main():
     if args.supp == '_':
         args.supp = False
     
-    for file in args.file:
+    for i, file in enumerate(args.file):
         if args.output is None:
             file_root, file_ext = path.splitext(file)
-            args.output = f'{file_root}_converted{file_ext}'
+            output = f'{file_root}_converted{file_ext}'
+        else:
+            output = args.output[i]
         
         if chardet_installed and args.encoding is None:
             with open(file, 'rb') as input_file:
@@ -69,7 +71,7 @@ def main():
                         tiao_na=args.tiao_na, \
                         punctation_align_center=args.punctation)
         
-        with open(args.output, 'wt', encoding='utf-8') as output_file:    
+        with open(output, 'wt', encoding='utf-8') as output_file:    
             output_file.write(converted)
 
 if __name__ == '__main__':

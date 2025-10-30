@@ -45,7 +45,7 @@
  | `tiao_na` | 使󠄁用含有飾󠄁筆捺的󠄁異體字選󠄁擇器序列轉換。 | `True` |
  | `punctation_align_center` | 把標點符號置中。 | `False` |
  
- ### 使󠄁用例子
+ # 使󠄁用例子
  
 	>>> from inheritedglyphs import *
 	>>> string = '寒來暑往，秋收冬藏。閏餘成歳，律吕調陽。雲騰致雨，露結為霜。金生麗水，玉出崑崗。'
@@ -56,7 +56,7 @@
 	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # 只使用Adobe-Japan1異體字選󠄁擇器
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
- ### 下載及󠄁安裝
+ # 下載及󠄁安裝
 
  該模組需要Python 3.7或更󠄁高版本。
  
