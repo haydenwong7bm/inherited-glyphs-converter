@@ -1,4 +1,4 @@
-[繁體中文󠄁](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/main) **简体中文󠄁** [EN](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/main/README_en.md)
+[繁體中文󠄁](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/main/README_zh-tc.md) **简体中文󠄁** [English](https://github.com/haydenwong7bm/inherited-glyphs-converter/blob/main/README.md)
 
 * [网上版已推出，请点击我！](https://haydenwong7bm.github.io/inherited-glyphs-converter/zh-sc/)
 
@@ -54,3 +54,13 @@
 	寒來暑往，秋收冬藏。閏餘成歲，律呂調陽。雲騰致雨，露結爲霜。金生麗水，玉出崑崗。
 	>>> print(convert(string, compatibility=False, ivs=['ad'])) # 只使用Adobe-Japan1异体字选择器
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
+
+ ### 下载及󠄁安装
+
+ 该模组需要Python 3.7或更󠄁高版本。
+ 
+ 如使用pip安装最新版本，只需执行：
+	pip install inheritedglyphs
+ 或于源码主目彔：
+	pip install .
+ 
