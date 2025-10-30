@@ -45,7 +45,7 @@
  | `tiao_na` | Uses IVSes with decorative tiāo nà stroke in the conversion. | |
  | `punctation_align_center` | Center align the punctation. | `False` |
  
- # Example
+ ## Example
  
 	>>> from inheritedglyphs import *
 	>>> string = '寒來暑往，秋收冬藏。閏餘成歳，律吕調陽。雲騰致雨，露結為霜。金生麗水，玉出崑崗。'
@@ -56,7 +56,7 @@
 	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # Only uses Adobe-Japan1 IVS
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
- # Download & Installation
+ ## Download & Installation
  
  The module requires Python 3.7 or up.
  
