@@ -56,11 +56,11 @@
 	>>> print(convert(string, compatibility=False, ivs=IVS_AD)) # Only uses Adobe-Japan1 IVS
 	寒󠄁來暑󠄁往󠄁，秋收冬󠄀藏。閏餘成󠄁歲，律呂調󠄁陽。雲騰󠄁致雨，露結爲霜。金生麗󠄁水，玉出崑崗。
 
- ### Download & installation
+ ### Download & Installation
  
  The module requires Python 3.7 or up.
  
- To install latest release with pip, simply run
+ The module is available on PyPI (https://pypi.org/project/inheritedglyphs). To install the latest release with pip, simply run
  ```
  pip install inheritedglyphs
  ```

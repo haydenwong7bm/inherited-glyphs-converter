@@ -59,7 +59,7 @@
 
  该模组需要Python 3.7或更󠄁高版本。
  
- 如使用pip安装最新版本，只需执行：
+ 该模组已发布在PyPI上。（https://pypi.org/project/inheritedglyphs）。如使用pip安装最新版本，只需执行：
  ```
  pip install inheritedglyphs
  ```
