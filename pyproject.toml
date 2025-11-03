@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "inheritedglyphs"
-version = "2.0"
+version = "2.0-1"
 description = ""
 readme = "README.md"
 requires-python = ">=3.7"
 license = "GPL-3.0-or-later"
 authors = [
-  {name = "Hayden Wong", email = "haydkenmutthew@gmail.com"}
+  {name = "Hayden Wong"}
 ]
 keywords = ["inheritedglyphs"]
 classifiers = [
